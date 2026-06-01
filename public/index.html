@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1a1a18">
+<title>Pantry Shopper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">pantry<span>shopper</span></div>
+  <div class="tab-bar">
+    <button class="active" onclick="switchTab('voice', this)">List</button>
+    <button onclick="switchTab('catalog', this)">Catalog</button>
+    <button onclick="switchTab('settings', this)">Settings</button>
+  </div>
+</header>
+
+<!-- VOICE + LIST PANEL -->
+<div class="panel active" id="panel-voice">
+
+  <div class="voice-card">
+    <div class="mic-row">
+      <button class="mic-btn" id="micBtn" onclick="toggleRecording()">🎙️</button>
+      <div class="mic-info">
+        <div class="mic-status">
+          <span class="status-dot" id="statusDot"></span>
+          <span id="statusText">Tap mic to start</span>
+          <span class="record-timer" id="recordTimer">0:00</span>
+        </div>
+        <div class="mic-hint" id="micHint">Say products and quantities naturally. Tap Done when finished.</div>
+      </div>
+    </div>
+
+    <div class="level-bar-wrap" id="levelBarWrap">
+      <div class="level-bar" id="levelBar"></div>
+    </div>
+
+    <textarea class="transcript-box" id="transcriptBox" placeholder="Your transcript will appear here after recording — or type directly…" oninput="onTranscriptInput()"></textarea>
+
+    <div class="voice-actions">
+      <button class="btn btn-primary" id="doneBtn" onclick="submitTranscript()" disabled>Done — Add to List</button>
+      <button class="btn btn-ghost" onclick="clearTranscript()" style="flex:0;padding:12px 14px;">✕</button>
+    </div>
+  </div>
+
+  <div class="parse-toast" id="parseToast">
+    <div class="spinner"></div>
+    <span id="toastMsg">Transcribing audio…</span>
+  </div>
+
+  <div class="list-header">
+    <div>
+      <div class="list-title">Shopping List</div>
+      <div class="item-count" id="itemCount">0 items</div>
+    </div>
+  </div>
+
+  <div id="shoppingList"></div>
+
+  <div class="clear-row" id="clearRow" style="display:none">
+    <button class="btn btn-danger" style="flex:0;padding:10px 24px;font-size:13px;" onclick="clearList()">Clear Entire List</button>
+  </div>
+
+</div>
+
+<!-- CATALOG PANEL -->
+<div class="panel" id="panel-catalog">
+  <div class="catalog-stores">
+    <div class="section-title">Stores</div>
+    <div class="store-chip-row" id="storeChips"></div>
+    <div class="input-row">
+      <input class="inp" id="newStoreName" placeholder="Add store name…" onkeydown="if(event.key==='Enter')addStore()">
+      <button class="btn btn-primary" style="flex:0;padding:10px 16px;" onclick="addStore()">Add</button>
+    </div>
+  </div>
+  <div>
+    <div class="section-title">Products</div>
+    <div class="catalog-table-wrap">
+      <table class="catalog-table">
+        <thead>
+          <tr><th>Item</th><th>Store</th><th>Aisle</th><th>Order</th><th>Unit</th><th>Stock</th><th>Size</th><th></th></tr>
+        </thead>
+        <tbody id="catalogBody"></tbody>
+      </table>
+    </div>
+    <button class="btn btn-ghost" style="width:100%;margin-bottom:12px;" onclick="addCatalogRow()">+ Add Product</button>
+    <div class="save-bar">
+      <button class="btn btn-primary" onclick="saveCatalog()">Save Catalog</button>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS PANEL -->
+<div class="panel" id="panel-settings">
+  <div class="settings-group">
+    <div class="settings-label">API Keys</div>
+    <div class="settings-desc">
+      Keys are stored in <code>.env</code> on your server — never sent to the browser.<br><br>
+      Edit <code>docker-container-location/.env</code>:
+      <pre style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:10px;font-size:12px;overflow-x:auto;">ANTHROPIC_API_KEY=sk-ant-...
+OPENAI_API_KEY=sk-...</pre>
+      Then restart the container:<br>
+      <pre style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:8px;font-size:12px;">docker compose restart</pre>
+    </div>
+  </div>
+  <div class="settings-group">
+    <div class="settings-label">Auto-submit silence timeout</div>
+    <div class="input-row" style="max-width:200px">
+      <input class="inp" type="number" id="silenceTimeout" value="30" min="0" max="120">
+      <span style="align-self:center;color:var(--muted);font-size:13px;">sec</span>
+    </div>
+    <div class="settings-desc">Seconds of silence after stopping before auto-submitting. Set to 0 to disable.</div>
+    <button class="btn btn-ghost" style="margin-top:8px;max-width:160px;" onclick="saveSettings()">Save</button>
+  </div>
+</div>
+
+<!-- CLARIFICATION MODAL -->
+<div class="modal-backdrop" id="modalBackdrop" style="display:none">
+  <div class="modal" id="clarifyModal">
+    <div class="modal-title" id="modalTitle">Which did you mean?</div>
+    <div class="modal-subtitle" id="modalSubtitle"></div>
+    <div class="modal-options" id="modalOptions"></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="modalConfirm" onclick="confirmClarification()">Add Selected</button>
+      <button class="btn btn-ghost" onclick="skipClarification()">Skip</button>
+    </div>
+  </div>
+</div>
+
+<!-- STORE PICKER MODAL -->
+<div class="modal-backdrop" id="storeBackdrop" style="display:none">
+  <div class="modal" id="storeModal">
+    <div class="modal-title">Unknown item</div>
+    <div class="modal-subtitle" id="storeModalSubtitle"></div>
+    <div class="modal-options" id="storeOptions"></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="storeConfirm" onclick="confirmStore()">Add to List</button>
+      <button class="btn btn-ghost" onclick="skipStore()">Skip</button>
+    </div>
+  </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+let catalog = { stores: [], items: [] };
+let shoppingList = [];
+let silenceTimeout = 30;
+
+// Recording
+let mediaRecorder = null;
+let audioChunks = [];
+let recordingStream = null;
+let isRecording = false;
+let timerInterval = null;
+let recordSeconds = 0;
+let analyser = null;
+let levelFrame = null;
+let audioCtx = null;
+
+// Clarification queue
+let clarifyQueue = [];   // ambiguous items pending
+let unknownQueue = [];   // unknown items pending
+let resolvedItems = [];  // fully resolved, ready to commit
+let currentClarify = null;
+let currentUnknown = null;
+
+// ============================================================
+// INIT
+// ============================================================
+async function init() {
+  await Promise.all([loadCatalog(), loadList()]);
+  renderList();
+  renderCatalog();
+}
+async function loadCatalog() { const r = await fetch('/api/catalog'); catalog = await r.json(); }
+async function loadList() { const r = await fetch('/api/list'); shoppingList = await r.json(); }
+
+// ============================================================
+// TABS
+// ============================================================
+function switchTab(tab, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-bar button').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ============================================================
+// RECORDING
+// ============================================================
+async function toggleRecording() {
+  if (isRecording) stopRecording(); else await startRecording();
+}
+
+async function startRecording() {
+  try { recordingStream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
+  catch (e) { showNotif('Microphone access denied', 'error'); return; }
+
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const source = audioCtx.createMediaStreamSource(recordingStream);
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 256;
+  source.connect(analyser);
+  startLevelMeter();
+
+  const mimeType = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus', 'audio/mp4']
+    .find(t => MediaRecorder.isTypeSupported(t)) || '';
+
+  audioChunks = [];
+  mediaRecorder = new MediaRecorder(recordingStream, mimeType ? { mimeType } : {});
+  mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
+  mediaRecorder.onstop = () => processRecording(mediaRecorder.mimeType || mimeType || 'audio/webm');
+  mediaRecorder.start(250);
+
+  isRecording = true;
+  recordSeconds = 0;
+  startTimer();
+  updateRecordUI(true);
+}
+
+function stopRecording() {
+  if (!isRecording) return;
+  isRecording = false;
+  clearInterval(timerInterval);
+  stopLevelMeter();
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+  recordingStream?.getTracks().forEach(t => t.stop());
+  audioCtx?.close();
+  updateRecordUI(false);
+}
+
+async function processRecording(mimeType) {
+  if (audioChunks.length === 0) return;
+  const blob = new Blob(audioChunks, { type: mimeType });
+  const base64 = await blobToBase64(blob);
+  showToast('Transcribing audio…');
+  try {
+    const r = await fetch('/api/transcribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ audio: base64, mimeType })
+    });
+    const data = await r.json();
+    if (data.error) { showNotif(data.error, 'error'); hideToast(); return; }
+    const box = document.getElementById('transcriptBox');
+    box.value = box.value ? box.value + ' ' + data.transcript : data.transcript;
+    updateDoneBtn();
+    hideToast();
+  } catch (e) {
+    showNotif('Transcription error: ' + e.message, 'error');
+    hideToast();
+  }
+}
+
+function blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(',')[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+function startTimer() {
+  timerInterval = setInterval(() => {
+    recordSeconds++;
+    const m = Math.floor(recordSeconds / 60);
+    const s = String(recordSeconds % 60).padStart(2, '0');
+    document.getElementById('recordTimer').textContent = `${m}:${s}`;
+  }, 1000);
+}
+
+function startLevelMeter() {
+  document.getElementById('levelBarWrap').classList.add('show');
+  const data = new Uint8Array(analyser.frequencyBinCount);
+  function tick() {
+    analyser.getByteFrequencyData(data);
+    const avg = data.reduce((a, b) => a + b, 0) / data.length;
+    document.getElementById('levelBar').style.width = Math.min(100, (avg / 128) * 200) + '%';
+    levelFrame = requestAnimationFrame(tick);
+  }
+  tick();
+}
+
+function stopLevelMeter() {
+  cancelAnimationFrame(levelFrame);
+  document.getElementById('levelBarWrap').classList.remove('show');
+  document.getElementById('levelBar').style.width = '0%';
+}
+
+function updateRecordUI(recording) {
+  const btn = document.getElementById('micBtn');
+  btn.className = 'mic-btn' + (recording ? ' recording' : '');
+  btn.textContent = recording ? '⏹️' : '🎙️';
+  document.getElementById('statusDot').className = 'status-dot' + (recording ? ' active' : '');
+  document.getElementById('statusText').textContent = recording ? 'Recording…' : 'Tap mic to start';
+  document.getElementById('recordTimer').className = 'record-timer' + (recording ? ' show' : '');
+  document.getElementById('micHint').textContent = recording
+    ? 'Speak naturally — long pauses are fine. Tap again to stop.'
+    : 'Say products and quantities naturally. Tap Done when finished.';
+}
+
+function onTranscriptInput() { updateDoneBtn(); }
+function clearTranscript() { document.getElementById('transcriptBox').value = ''; updateDoneBtn(); }
+function updateDoneBtn() {
+  document.getElementById('doneBtn').disabled = !document.getElementById('transcriptBox').value.trim();
+}
+
+// ============================================================
+// SUBMIT & RESOLUTION FLOW
+// ============================================================
+async function submitTranscript() {
+  const transcript = document.getElementById('transcriptBox').value.trim();
+  if (!transcript) return;
+  if (isRecording) stopRecording();
+
+  showToast('Parsing with AI…');
+  document.getElementById('doneBtn').disabled = true;
+
+  try {
+    const r = await fetch('/api/parse', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ transcript })
+    });
+    const data = await r.json();
+    if (data.error) { showNotif(data.error, 'error'); hideToast(); updateDoneBtn(); return; }
+
+    hideToast();
+    clearTranscript();
+
+    // Seed the resolution queues
+    resolvedItems = [...(data.confirmed || [])];
+    clarifyQueue = [...(data.ambiguous || [])];
+    unknownQueue = [...(data.unknown || [])];
+
+    // Start resolution flow
+    processNextClarification();
+  } catch (e) {
+    showNotif('Error: ' + e.message, 'error');
+    hideToast();
+    updateDoneBtn();
+  }
+}
+
+function processNextClarification() {
+  if (clarifyQueue.length > 0) {
+    showClarifyModal(clarifyQueue.shift());
+  } else {
+    processNextUnknown();
+  }
+}
+
+function processNextUnknown() {
+  if (unknownQueue.length > 0) {
+    showStoreModal(unknownQueue.shift());
+  } else {
+    commitAllItems();
+  }
+}
+
+async function commitAllItems() {
+  if (resolvedItems.length === 0) {
+    showNotif('No items added', '');
+    return;
+  }
+  try {
+    const r = await fetch('/api/list/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: resolvedItems })
+    });
+    const data = await r.json();
+    shoppingList = data.list;
+    renderList();
+    const n = resolvedItems.length;
+    showNotif(`Added ${n} item${n !== 1 ? 's' : ''} to list`, 'success');
+    resolvedItems = [];
+  } catch (e) {
+    showNotif('Error saving list: ' + e.message, 'error');
+  }
+}
+
+// ============================================================
+// CLARIFICATION MODAL (ambiguous items)
+// ============================================================
+function showClarifyModal(ambiguous) {
+  currentClarify = ambiguous;
+  document.getElementById('modalTitle').textContent = `Which did you mean by "${ambiguous.spoken}"?`;
+  document.getElementById('modalSubtitle').textContent = 'Select one or more — all selected will be added to your list.';
+
+  const opts = document.getElementById('modalOptions');
+  opts.innerHTML = ambiguous.candidates.map((c, i) => `
+    <label class="modal-option">
+      <input type="checkbox" name="clarify" value="${i}" class="modal-check">
+      <div class="modal-option-info">
+        <div class="modal-option-name">${esc(c.item)}</div>
+        <div class="modal-option-sub">${esc(c.store)} · ${esc(c.aisle)}${c.size && c.size !== '?' ? ' · ' + esc(c.size) : ''}</div>
+      </div>
+    </label>
+  `).join('');
+
+  document.getElementById('modalBackdrop').style.display = 'flex';
+}
+
+function confirmClarification() {
+  const checked = [...document.querySelectorAll('#modalOptions input[type=checkbox]:checked')];
+  if (checked.length === 0) { showNotif('Select at least one option', ''); return; }
+  for (const cb of checked) {
+    const candidate = currentClarify.candidates[parseInt(cb.value)];
+    resolvedItems.push({ ...candidate, qty: currentClarify.qty });
+  }
+  document.getElementById('modalBackdrop').style.display = 'none';
+  currentClarify = null;
+  processNextClarification();
+}
+
+function skipClarification() {
+  document.getElementById('modalBackdrop').style.display = 'none';
+  currentClarify = null;
+  processNextClarification();
+}
+
+// ============================================================
+// STORE PICKER MODAL (unknown items)
+// ============================================================
+function showStoreModal(unknown) {
+  currentUnknown = unknown;
+  document.getElementById('storeModalSubtitle').textContent =
+    `"${unknown.spoken}" wasn't found in your catalog. Which store should it go under?`;
+
+  const opts = document.getElementById('storeOptions');
+  opts.innerHTML = catalog.stores.map((s, i) => `
+    <label class="modal-option">
+      <input type="radio" name="storeChoice" value="${i}" class="modal-check" ${i === 0 ? 'checked' : ''}>
+      <div class="modal-option-info">
+        <div class="modal-option-name">${esc(s.name)}</div>
+      </div>
+    </label>
+  `).join('');
+
+  document.getElementById('storeBackdrop').style.display = 'flex';
+}
+
+function confirmStore() {
+  const checked = document.querySelector('#storeOptions input[type=radio]:checked');
+  if (!checked) return;
+  const store = catalog.stores[parseInt(checked.value)];
+  resolvedItems.push({
+    id: slugify(currentUnknown.item || currentUnknown.spoken) + '-' + Date.now(),
+    item: currentUnknown.item || currentUnknown.spoken,
+    qty: currentUnknown.qty || 1,
+    unit: currentUnknown.unit || '',
+    store: store.name,
+    aisle: 'Unknown',
+    aisleOrder: 1,
+    size: '',
+    checked: false,
+    catalogMatch: false
+  });
+  document.getElementById('storeBackdrop').style.display = 'none';
+  currentUnknown = null;
+  processNextUnknown();
+}
+
+function skipStore() {
+  document.getElementById('storeBackdrop').style.display = 'none';
+  currentUnknown = null;
+  processNextUnknown();
+}
+
+function slugify(str) { return String(str||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
+
+// ============================================================
+// SHOPPING LIST
+// ============================================================
+function renderList() {
+  const el = document.getElementById('shoppingList');
+  const countEl = document.getElementById('itemCount');
+  const clearRow = document.getElementById('clearRow');
+  const unchecked = shoppingList.filter(i => !i.checked).length;
+  const total = shoppingList.length;
+  countEl.textContent = total === 0 ? '0 items' : `${unchecked} of ${total} remaining`;
+  clearRow.style.display = total > 0 ? 'flex' : 'none';
+
+  if (total === 0) {
+    el.innerHTML = `<div class="empty-list"><div class="empty-icon">🛒</div><p>Your list is empty.<br>Tap the mic and start dictating.</p></div>`;
+    return;
+  }
+
+  const byStore = {};
+  for (const item of shoppingList) {
+    const store = item.store || 'Unknown';
+    const aisle = item.aisle || 'Unknown';
+    if (!byStore[store]) byStore[store] = {};
+    if (!byStore[store][aisle]) byStore[store][aisle] = [];
+    byStore[store][aisle].push(item);
+  }
+
+  let html = '';
+  let storeIdx = 0;
+  for (const [store, aisles] of Object.entries(byStore)) {
+    html += `<div class="store-section">`;
+    html += `<div class="store-label store-${storeIdx % 4}">${esc(store)}</div>`;
+    for (const [aisle, items] of Object.entries(aisles)) {
+      html += `<div class="aisle-group"><div class="aisle-label">${esc(aisle)}</div>`;
+      for (const item of items) html += renderItem(item);
+      html += `</div>`;
+    }
+    html += `</div>`;
+    storeIdx++;
+  }
+  el.innerHTML = html;
+}
+
+function renderItem(item) {
+  const checked = item.checked ? 'checked' : '';
+  const unmatched = item.catalogMatch === false ? 'unmatched' : '';
+  const unitStr = item.unit ? ` ${item.unit}` : '';
+  const badge = item.catalogMatch === false ? '<span style="color:var(--danger);margin-left:6px;font-size:11px;">?</span>' : '';
+  const sizeStr = item.size && item.size !== '?' ? ` · ${esc(item.size)}` : '';
+  return `<div class="list-item ${checked} ${unmatched}" onclick="toggleItem('${item.id}')">
+    <div class="check-box">${item.checked ? '✓' : ''}</div>
+    <div class="item-details">
+      <div class="item-name">${esc(item.item||item.name)}${badge}</div>
+      <div class="item-sub">${esc(item.store)} · ${esc(item.aisle)}${sizeStr}</div>
+    </div>
+    <div class="item-qty">${item.qty}${esc(unitStr)}</div>
+    <button class="delete-btn" onclick="deleteItem(event,'${item.id}')">✕</button>
+  </div>`;
+}
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+async function toggleItem(id) {
+  const item = shoppingList.find(i => i.id === id);
+  if (item) { item.checked = !item.checked; await saveList(); renderList(); }
+}
+async function deleteItem(e, id) {
+  e.stopPropagation();
+  shoppingList = shoppingList.filter(i => i.id !== id);
+  await saveList(); renderList();
+}
+async function clearList() {
+  if (!confirm('Clear the entire shopping list?')) return;
+  shoppingList = [];
+  await fetch('/api/list', { method: 'DELETE' });
+  renderList();
+}
+async function saveList() {
+  await fetch('/api/list', { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(shoppingList) });
+}
+
+// ============================================================
+// CATALOG
+// ============================================================
+function renderCatalog() {
+  document.getElementById('storeChips').innerHTML = catalog.stores.map(s =>
+    `<div class="store-chip">${esc(s.name)}<button onclick="removeStore('${s.id}')">×</button></div>`
+  ).join('');
+  document.getElementById('catalogBody').innerHTML = catalog.items.map((item, idx) => `
+    <tr>
+      <td><input value="${esc(item.item||item.name||'')}" onchange="updateCatalogItem(${idx},'item',this.value)"></td>
+      <td><select onchange="updateCatalogItem(${idx},'store',this.value)">
+        ${catalog.stores.map(s => `<option value="${esc(s.name)}" ${s.name===item.store?'selected':''}>${esc(s.name)}</option>`).join('')}
+        <option value="Unknown" ${item.store==='Unknown'?'selected':''}>Unknown</option>
+      </select></td>
+      <td><input value="${esc(item.aisle)}" onchange="updateCatalogItem(${idx},'aisle',this.value)"></td>
+      <td><input type="number" value="${item.aisleOrder}" style="width:48px" onchange="updateCatalogItem(${idx},'aisleOrder',parseInt(this.value))"></td>
+      <td><input value="${esc(item.unit||'')}" placeholder="cans…" onchange="updateCatalogItem(${idx},'unit',this.value)"></td>
+      <td><input value="${esc(item.stock||'')}" placeholder="0" style="width:40px" onchange="updateCatalogItem(${idx},'stock',this.value)"></td>
+      <td><input value="${esc(item.size||'')}" placeholder="16 oz…" onchange="updateCatalogItem(${idx},'size',this.value)"></td>
+      <td><button class="del-row-btn" onclick="deleteCatalogRow(${idx})">✕</button></td>
+    </tr>`).join('');
+}
+function updateCatalogItem(idx, field, value) { catalog.items[idx][field] = value; }
+function addCatalogRow() {
+  catalog.items.push({ id: 'new-'+Date.now(), item: '', store: catalog.stores[0]?.name||'Unknown', aisle: '', aisleOrder: 99, unit: '', stock: '', size: '' });
+  renderCatalog();
+  document.querySelectorAll('#catalogBody tr').forEach((r,i,a) => { if(i===a.length-1) r.querySelector('input')?.focus(); });
+}
+function deleteCatalogRow(idx) { catalog.items.splice(idx,1); renderCatalog(); }
+function addStore() {
+  const inp = document.getElementById('newStoreName');
+  const name = inp.value.trim();
+  if (!name) return;
+  catalog.stores.push({ id: slugify(name), name });
+  inp.value = '';
+  renderCatalog();
+}
+function removeStore(id) { catalog.stores = catalog.stores.filter(s => s.id !== id); renderCatalog(); }
+async function saveCatalog() {
+  catalog.items = catalog.items.map(item => ({ ...item, id: item.id || slugify(item.item||item.name||'item') }));
+  await fetch('/api/catalog', { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(catalog) });
+  showNotif('Catalog saved', 'success');
+}
+
+// ============================================================
+// SETTINGS
+// ============================================================
+function saveSettings() {
+  silenceTimeout = parseInt(document.getElementById('silenceTimeout').value || 30);
+  showNotif('Settings saved', 'success');
+}
+
+// ============================================================
+// TOAST + NOTIFICATION
+// ============================================================
+function showToast(msg) { document.getElementById('toastMsg').textContent = msg; document.getElementById('parseToast').classList.add('show'); }
+function hideToast() { document.getElementById('parseToast').classList.remove('show'); }
+let notifTimer;
+function showNotif(msg, type='') {
+  const el = document.getElementById('notif');
+  el.textContent = msg;
+  el.className = 'notif show' + (type ? ' '+type : '');
+  clearTimeout(notifTimer);
+  notifTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ============================================================
+// BOOT
+// ============================================================
+init();
+</script>
+</body>
+</html>

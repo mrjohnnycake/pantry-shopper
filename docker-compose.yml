@@ -1,0 +1,14 @@
+services:
+  pantry-shopper:
+    image: ghcr.io/mrjohnnycake/pantry-shopper:latest
+    container_name: pantry-shopper
+    restart: unless-stopped
+    ports:
+      - "3006:3006"
+    environment:
+      - PORT=3006
+      - ANTHROPIC_MODEL=claude-sonnet-4-6
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data

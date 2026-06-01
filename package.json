@@ -1,0 +1,14 @@
+{
+  "name": "pantry-shopper",
+  "version": "0.3.0",
+  "description": "Voice-driven pantry shopping list with AI parsing",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2"
+  }
+}
