@@ -25,6 +25,50 @@ app.get('/api/list', (req, res) => res.json(JSON.parse(fs.readFileSync(LIST_FILE
 app.put('/api/list', (req, res) => { fs.writeFileSync(LIST_FILE, JSON.stringify(req.body, null, 2)); res.json({ ok: true }); });
 app.delete('/api/list', (req, res) => { fs.writeFileSync(LIST_FILE, JSON.stringify([], null, 2)); res.json({ ok: true }); });
 
+// --- Pre-filter catalog by transcript keywords ---
+// Returns the top N most relevant items so we don't send 369 items to Claude every time
+const STOPWORDS = new Set([
+  'a','an','the','and','or','of','some','few','couple','need','get','buy','please',
+  'me','my','us','we','i','want','like','more','few','lot','pack','bag','box','can',
+  'jar','bottle','gallon','lb','lbs','oz','dozen','bunch','piece','pieces','item','items'
+]);
+const MAX_CATALOG_ITEMS = 60;
+
+function preFilterCatalog(transcript, catalogItems) {
+  // Tokenize transcript into meaningful words
+  const words = transcript.toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .split(/\s+/)
+    .filter(w => w.length > 2 && !STOPWORDS.has(w));
+
+  if (words.length === 0) return catalogItems.slice(0, MAX_CATALOG_ITEMS);
+
+  // Score each catalog item by keyword overlap
+  const scored = catalogItems.map(item => {
+    const itemText = (item.item || '').toLowerCase();
+    let score = 0;
+    for (const word of words) {
+      if (itemText.includes(word)) score += 2;           // full word match
+      else if (word.length > 4) {
+        // partial stem match — "yogurts" matches "yogurt"
+        const stem = word.slice(0, -1);
+        if (itemText.includes(stem)) score += 1;
+      }
+    }
+    return { item, score };
+  });
+
+  // Always include items with any score, pad with top unscored items up to MAX
+  const matched = scored.filter(s => s.score > 0).sort((a, b) => b.score - a.score);
+  const unmatched = scored.filter(s => s.score === 0);
+
+  const result = matched.map(s => s.item);
+  const needed = MAX_CATALOG_ITEMS - result.length;
+  if (needed > 0) result.push(...unmatched.slice(0, needed).map(s => s.item));
+
+  return result;
+}
+
 // --- Transcribe audio via Whisper ---
 app.post('/api/transcribe', async (req, res) => {
   const { audio, mimeType } = req.body;
@@ -53,7 +97,6 @@ app.post('/api/transcribe', async (req, res) => {
 });
 
 // --- Parse transcript via Claude ---
-// Returns: confirmed items + items needing clarification + unknown items needing a store
 app.post('/api/parse', async (req, res) => {
   const { transcript } = req.body;
   const anthropicKey = process.env.ANTHROPIC_API_KEY;
@@ -61,7 +104,11 @@ app.post('/api/parse', async (req, res) => {
 
   const catalog = JSON.parse(fs.readFileSync(CATALOG_FILE));
 
-  const catalogSummary = catalog.items.map(item =>
+  // Pre-filter to most relevant items before sending to Claude
+  const filteredItems = preFilterCatalog(transcript, catalog.items);
+  console.log(`Catalog pre-filter: ${catalog.items.length} items → ${filteredItems.length} sent to Claude`);
+
+  const catalogSummary = filteredItems.map(item =>
     `id="${item.id}" item="${item.item}" store="${item.store}" aisle="${item.aisle}" aisleOrder=${item.aisleOrder} unit="${item.unit||''}" size="${item.size||''}" stock="${item.stock||''}"`
   ).join('\n');
 
@@ -110,12 +157,13 @@ Return ONLY a JSON object (no markdown):
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6',
+        model: process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5',
         max_tokens: 4000,
         messages: [{ role: 'user', content: prompt }]
       })
     });
     const data = await response.json();
+    // console.log('Anthropic response:', JSON.stringify(data, null, 2));
     if (data.error) return res.status(500).json({ error: data.error.message });
     const text = data.content[0].text.trim();
     const parsed = JSON.parse(text.replace(/```json|```/g, '').trim());
@@ -128,7 +176,7 @@ Return ONLY a JSON object (no markdown):
 
 // --- Commit resolved items to the list ---
 app.post('/api/list/add', (req, res) => {
-  const { items } = req.body; // array of fully resolved items
+  const { items } = req.body;
   const currentList = JSON.parse(fs.readFileSync(LIST_FILE));
   const merged = [...currentList];
   for (const newItem of items) {
