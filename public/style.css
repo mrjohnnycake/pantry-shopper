@@ -329,10 +329,8 @@ header {
   padding: 4px;
   line-height: 1;
   flex-shrink: 0;
-  opacity: 0;
-  transition: opacity 0.15s;
+  opacity: 0.5;
 }
-.list-item:hover .delete-btn { opacity: 1; }
 
 .empty-list { text-align: center; padding: 48px 24px; color: var(--muted); }
 .empty-list .empty-icon { font-size: 48px; margin-bottom: 12px; }
@@ -575,10 +573,8 @@ select.inp { cursor: pointer; }
   padding: 4px;
   line-height: 1;
   flex-shrink: 0;
-  opacity: 0;
-  transition: opacity 0.15s;
+  opacity: 0.5;
 }
-.list-item:hover .qty-edit-btn { opacity: 1; }
 
 /* ---- QTY STEP BUTTONS in modal ---- */
 .qty-step-btn {

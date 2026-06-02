@@ -9,7 +9,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body>
 
@@ -65,6 +64,7 @@
   <div id="shoppingList"></div>
 
   <div class="clear-row" id="clearRow" style="display:none">
+    <button class="btn btn-ghost" style="flex:0;padding:10px 24px;font-size:13px;" onclick="clearChecked()">Clear Checked</button>
     <button class="btn btn-danger" style="flex:0;padding:10px 24px;font-size:13px;" onclick="clearList()">Clear Entire List</button>
   </div>
 
@@ -659,6 +659,15 @@ async function deleteItem(e, id) {
   renderList();
 }
 
+async function clearChecked() {
+  const count = shoppingList.filter(i => i.checked).length;
+  if (count === 0) { showNotif('No checked items to clear', ''); return; }
+  if (!confirm(`Remove ${count} checked item${count !== 1 ? 's' : ''} from the list?`)) return;
+  shoppingList = shoppingList.filter(i => !i.checked);
+  await saveList();
+  renderList();
+}
+
 async function clearList() {
   if (!confirm('Clear the entire shopping list?')) return;
   shoppingList = [];
@@ -708,9 +717,9 @@ function updateCatalogItem(idx, field, value) { catalog.items[idx][field] = valu
 
 function addCatalogRow() {
   const defaultStore = settings.defaultStore || catalog.stores[0]?.name || 'Unknown';
-  const term = document.getElementById('catalogSearch').value.trim();
-  catalog.items.push({ id: 'new-'+Date.now(), item: term, store: defaultStore, aisle: '', aisleOrder: 99, unit: '', stock: '', size: '' });
+  catalog.items.push({ id: 'new-'+Date.now(), item: '', store: defaultStore, aisle: '', aisleOrder: 99, unit: '', stock: '', size: '' });
   renderCatalog();
+  // Scroll to and focus the new row, preserving filter
   const rows = [...document.querySelectorAll('#catalogBody tr')].filter(r => r.style.display !== 'none');
   rows[rows.length - 1]?.querySelector('input')?.focus();
 }
