@@ -81,6 +81,11 @@
   </div>
   <div>
     <div class="section-title">Products</div>
+      <div class="section-title">Products</div>
+      <div class="input-row" style="margin-bottom:12px;">
+        <input class="inp" id="catalogSearch" placeholder="Filter products…" oninput="filterCatalog()">
+        <button class="btn btn-ghost" style="flex:0;padding:10px 14px;" onclick="document.getElementById('catalogSearch').value='';filterCatalog()">✕</button>
+      </div>
     <div class="catalog-table-wrap">
       <table class="catalog-table">
         <thead>
@@ -605,6 +610,14 @@ async function saveCatalog() {
   catalog.items = catalog.items.map(item => ({ ...item, id: item.id || slugify(item.item||item.name||'item') }));
   await fetch('/api/catalog', { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(catalog) });
   showNotif('Catalog saved', 'success');
+}
+
+function filterCatalog() {
+  const term = document.getElementById('catalogSearch').value.toLowerCase();
+  document.querySelectorAll('#catalogBody tr').forEach(row => {
+    const text = row.innerText.toLowerCase();
+    row.style.display = text.includes(term) ? '' : 'none';
+  });
 }
 
 // ============================================================
