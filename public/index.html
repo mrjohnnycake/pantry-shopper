@@ -13,7 +13,7 @@
 <body>
 
 <header>
-  <div class="logo">pantry<span>shopper</span></div>
+  <div class="logo" onclick="switchTab('voice', document.querySelector('.tab-bar button'))" style="cursor:pointer;">pantry<span>shopper</span></div>
   <div class="tab-bar">
     <button class="active" onclick="switchTab('voice', this)">List</button>
     <button onclick="switchTab('catalog', this)">Catalog</button>
@@ -494,7 +494,7 @@ function renderList() {
   const clearRow = document.getElementById('clearRow');
   const unchecked = shoppingList.filter(i => !i.checked).length;
   const total = shoppingList.length;
-  countEl.textContent = total === 0 ? '0 items' : `${unchecked} of ${total} remaining`;
+  countEl.textContent = '';
   clearRow.style.display = total > 0 ? 'flex' : 'none';
 
   if (total === 0) {
@@ -515,7 +515,10 @@ function renderList() {
   let storeIdx = 0;
   for (const [store, aisles] of Object.entries(byStore)) {
     html += `<div class="store-section">`;
+    const storeTotal = Object.values(aisles).flat().length;
+    const storeUnchecked = Object.values(aisles).flat().filter(i => !i.checked).length;
     html += `<div class="store-label store-${storeIdx % 4}">${esc(store)}</div>`;
+    html += `<div style="font-size:12px;color:var(--muted);margin-bottom:8px;">${storeUnchecked} of ${storeTotal} remaining</div>`;
     for (const [aisle, items] of Object.entries(aisles)) {
       html += `<div class="aisle-group"><div class="aisle-label">${esc(aisle)}</div>`;
       for (const item of items) html += renderItem(item);
