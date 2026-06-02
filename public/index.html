@@ -102,7 +102,7 @@
     <div class="settings-label">API Keys</div>
     <div class="settings-desc">
       Keys are stored in <code>.env</code> on your server — never sent to the browser.<br><br>
-      Edit <code>docker-container-location/.env</code>:
+      Edit <code>/home/youruser/shopping-list-maker/.env</code>:
       <pre style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:10px;font-size:12px;overflow-x:auto;">ANTHROPIC_API_KEY=sk-ant-...
 OPENAI_API_KEY=sk-...</pre>
       Then restart the container:<br>
@@ -529,11 +529,12 @@ function renderItem(item) {
   const unitStr = item.unit ? ` ${item.unit}` : '';
   const badge = item.catalogMatch === false ? '<span style="color:var(--danger);margin-left:6px;font-size:11px;">?</span>' : '';
   const sizeStr = item.size && item.size !== '?' ? ` · ${esc(item.size)}` : '';
+  const stockStr = item.stock && item.stock !== '?' ? ` · Keep ${esc(item.stock)}` : '';
   return `<div class="list-item ${checked} ${unmatched}" onclick="toggleItem('${item.id}')">
     <div class="check-box">${item.checked ? '✓' : ''}</div>
     <div class="item-details">
       <div class="item-name">${esc(item.item||item.name)}${badge}</div>
-      <div class="item-sub">${esc(item.store)} · ${esc(item.aisle)}${sizeStr}</div>
+      <div class="item-sub">${esc(item.store)} · ${esc(item.aisle)}${sizeStr}${stockStr}</div>
     </div>
     <div class="item-qty">${item.qty}${esc(unitStr)}</div>
     <button class="delete-btn" onclick="deleteItem(event,'${item.id}')">✕</button>
