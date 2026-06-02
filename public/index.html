@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1a1a18">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <title>Pantry Shopper</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@300;400;500&display=swap" rel="stylesheet">
@@ -58,7 +57,7 @@
   <div class="list-header">
     <div>
       <div class="list-title">Shopping List</div>
-      <div class="item-count" id="itemCount">0 items</div>
+      <div id="itemCount"></div>
     </div>
   </div>
 
@@ -82,10 +81,10 @@
   </div>
   <div>
     <div class="section-title">Products</div>
-      <div class="input-row" style="margin-bottom:12px;">
-        <input class="inp" id="catalogSearch" placeholder="Filter products…" oninput="filterCatalog()">
-        <button class="btn btn-ghost" style="flex:0;padding:10px 14px;" onclick="document.getElementById('catalogSearch').value='';filterCatalog()">✕</button>
-      </div>
+    <div class="input-row" style="margin-bottom:12px;">
+      <input class="inp" id="catalogSearch" placeholder="Filter products…" oninput="filterCatalog()">
+      <button class="btn btn-ghost" style="flex:0;padding:10px 14px;" onclick="document.getElementById('catalogSearch').value='';filterCatalog()">✕</button>
+    </div>
     <div class="catalog-table-wrap">
       <table class="catalog-table">
         <thead>
@@ -107,12 +106,17 @@
     <div class="settings-label">API Keys</div>
     <div class="settings-desc">
       Keys are stored in <code>.env</code> on your server — never sent to the browser.<br><br>
-      Edit <code>/home/youruser/shopping-list-maker/.env</code>:
+      Edit <code>/docker-container-location/pantry-shopper/.env</code>:
       <pre style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:10px;font-size:12px;overflow-x:auto;">ANTHROPIC_API_KEY=sk-ant-...
 OPENAI_API_KEY=sk-...</pre>
       Then restart the container:<br>
       <pre style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:8px;font-size:12px;">docker compose restart</pre>
     </div>
+  </div>
+  <div class="settings-group">
+    <div class="settings-label">Default store for new catalog items</div>
+    <select class="inp" id="defaultStoreSelect" style="max-width:200px;margin-bottom:8px;"></select>
+    <div class="settings-desc">Store pre-selected when adding a new product in the Catalog tab.</div>
   </div>
   <div class="settings-group">
     <div class="settings-label">Auto-submit silence timeout</div>
@@ -121,32 +125,49 @@ OPENAI_API_KEY=sk-...</pre>
       <span style="align-self:center;color:var(--muted);font-size:13px;">sec</span>
     </div>
     <div class="settings-desc">Seconds of silence after stopping before auto-submitting. Set to 0 to disable.</div>
-    <button class="btn btn-ghost" style="margin-top:8px;max-width:160px;" onclick="saveSettings()">Save</button>
   </div>
+  <button class="btn btn-primary" style="max-width:160px;" onclick="saveSettings()">Save Settings</button>
 </div>
 
-<!-- CLARIFICATION MODAL -->
+<!-- CLARIFICATION MODAL (ambiguous items) -->
 <div class="modal-backdrop" id="modalBackdrop" style="display:none">
   <div class="modal" id="clarifyModal">
     <div class="modal-title" id="modalTitle">Which did you mean?</div>
     <div class="modal-subtitle" id="modalSubtitle"></div>
     <div class="modal-options" id="modalOptions"></div>
     <div class="modal-actions">
-      <button class="btn btn-primary" id="modalConfirm" onclick="confirmClarification()">Add Selected</button>
+      <button class="btn btn-primary" onclick="confirmClarification()">Add Selected</button>
+      <button class="btn btn-ghost" onclick="routeToUnknown()">It's something else</button>
       <button class="btn btn-ghost" onclick="skipClarification()">Skip</button>
     </div>
   </div>
 </div>
 
-<!-- STORE PICKER MODAL -->
+<!-- STORE PICKER MODAL (unknown items) -->
 <div class="modal-backdrop" id="storeBackdrop" style="display:none">
   <div class="modal" id="storeModal">
     <div class="modal-title">Unknown item</div>
     <div class="modal-subtitle" id="storeModalSubtitle"></div>
     <div class="modal-options" id="storeOptions"></div>
     <div class="modal-actions">
-      <button class="btn btn-primary" id="storeConfirm" onclick="confirmStore()">Add to List</button>
+      <button class="btn btn-primary" onclick="confirmStore()">Add to List</button>
       <button class="btn btn-ghost" onclick="skipStore()">Skip</button>
+    </div>
+  </div>
+</div>
+
+<!-- QTY EDIT MODAL -->
+<div class="modal-backdrop" id="qtyBackdrop" style="display:none">
+  <div class="modal" id="qtyModal">
+    <div class="modal-title" id="qtyModalTitle">Edit quantity</div>
+    <div style="display:flex;align-items:center;gap:12px;margin:20px 0;">
+      <button class="qty-step-btn" onclick="stepQty(-1)">−</button>
+      <input class="inp" type="number" id="qtyInput" min="1" style="text-align:center;font-size:24px;font-family:'Archivo Black',sans-serif;max-width:100px;">
+      <button class="qty-step-btn" onclick="stepQty(1)">+</button>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="confirmQty()">Save</button>
+      <button class="btn btn-ghost" onclick="closeQtyModal()">Cancel</button>
     </div>
   </div>
 </div>
@@ -159,7 +180,7 @@ OPENAI_API_KEY=sk-...</pre>
 // ============================================================
 let catalog = { stores: [], items: [] };
 let shoppingList = [];
-let silenceTimeout = 30;
+let settings = { silenceTimeout: 30, defaultStore: 'WinCo' };
 
 // Recording
 let mediaRecorder = null;
@@ -173,22 +194,51 @@ let levelFrame = null;
 let audioCtx = null;
 
 // Clarification queue
-let clarifyQueue = [];   // ambiguous items pending
-let unknownQueue = [];   // unknown items pending
-let resolvedItems = [];  // fully resolved, ready to commit
+let clarifyQueue = [];
+let unknownQueue = [];
+let resolvedItems = [];
 let currentClarify = null;
 let currentUnknown = null;
+
+// Qty edit
+let editingItemId = null;
 
 // ============================================================
 // INIT
 // ============================================================
 async function init() {
+  loadSettings();
   await Promise.all([loadCatalog(), loadList()]);
   renderList();
   renderCatalog();
+  populateDefaultStoreSelect();
 }
 async function loadCatalog() { const r = await fetch('/api/catalog'); catalog = await r.json(); }
 async function loadList() { const r = await fetch('/api/list'); shoppingList = await r.json(); }
+
+function loadSettings() {
+  try {
+    const s = JSON.parse(localStorage.getItem('pantry-settings') || '{}');
+    settings = { ...settings, ...s };
+    document.getElementById('silenceTimeout').value = settings.silenceTimeout;
+  } catch(e) {}
+}
+
+function saveSettings() {
+  settings.silenceTimeout = parseInt(document.getElementById('silenceTimeout').value || 30);
+  const sel = document.getElementById('defaultStoreSelect');
+  if (sel) settings.defaultStore = sel.value;
+  localStorage.setItem('pantry-settings', JSON.stringify(settings));
+  showNotif('Settings saved', 'success');
+}
+
+function populateDefaultStoreSelect() {
+  const sel = document.getElementById('defaultStoreSelect');
+  if (!sel) return;
+  sel.innerHTML = catalog.stores.map(s =>
+    `<option value="${esc(s.name)}" ${s.name === settings.defaultStore ? 'selected' : ''}>${esc(s.name)}</option>`
+  ).join('');
+}
 
 // ============================================================
 // TABS
@@ -197,7 +247,9 @@ function switchTab(tab, btn) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-bar button').forEach(b => b.classList.remove('active'));
   document.getElementById('panel-' + tab).classList.add('active');
+  if (typeof btn === 'string') btn = document.querySelector('.tab-bar button');
   btn.classList.add('active');
+  if (tab === 'settings') populateDefaultStoreSelect();
 }
 
 // ============================================================
@@ -344,12 +396,10 @@ async function submitTranscript() {
     hideToast();
     clearTranscript();
 
-    // Seed the resolution queues
     resolvedItems = [...(data.confirmed || [])];
     clarifyQueue = [...(data.ambiguous || [])];
     unknownQueue = [...(data.unknown || [])];
 
-    // Start resolution flow
     processNextClarification();
   } catch (e) {
     showNotif('Error: ' + e.message, 'error');
@@ -359,26 +409,17 @@ async function submitTranscript() {
 }
 
 function processNextClarification() {
-  if (clarifyQueue.length > 0) {
-    showClarifyModal(clarifyQueue.shift());
-  } else {
-    processNextUnknown();
-  }
+  if (clarifyQueue.length > 0) showClarifyModal(clarifyQueue.shift());
+  else processNextUnknown();
 }
 
 function processNextUnknown() {
-  if (unknownQueue.length > 0) {
-    showStoreModal(unknownQueue.shift());
-  } else {
-    commitAllItems();
-  }
+  if (unknownQueue.length > 0) showStoreModal(unknownQueue.shift());
+  else commitAllItems();
 }
 
 async function commitAllItems() {
-  if (resolvedItems.length === 0) {
-    showNotif('No items added', '');
-    return;
-  }
+  if (resolvedItems.length === 0) { showNotif('No items added', ''); return; }
   try {
     const r = await fetch('/api/list/add', {
       method: 'POST',
@@ -397,7 +438,7 @@ async function commitAllItems() {
 }
 
 // ============================================================
-// CLARIFICATION MODAL (ambiguous items)
+// CLARIFICATION MODAL
 // ============================================================
 function showClarifyModal(ambiguous) {
   currentClarify = ambiguous;
@@ -436,18 +477,34 @@ function skipClarification() {
   processNextClarification();
 }
 
+// Route ambiguous item to the unknown/store-picker flow instead
+function routeToUnknown() {
+  document.getElementById('modalBackdrop').style.display = 'none';
+  if (currentClarify) {
+    unknownQueue.unshift({
+      spoken: currentClarify.spoken,
+      qty: currentClarify.qty,
+      item: currentClarify.spoken,
+      unit: ''
+    });
+    currentClarify = null;
+  }
+  processNextClarification();
+}
+
 // ============================================================
-// STORE PICKER MODAL (unknown items)
+// STORE PICKER MODAL
 // ============================================================
 function showStoreModal(unknown) {
   currentUnknown = unknown;
   document.getElementById('storeModalSubtitle').textContent =
     `"${unknown.spoken}" wasn't found in your catalog. Which store should it go under?`;
 
+  const defaultIdx = catalog.stores.findIndex(s => s.name === settings.defaultStore);
   const opts = document.getElementById('storeOptions');
   opts.innerHTML = catalog.stores.map((s, i) => `
     <label class="modal-option">
-      <input type="radio" name="storeChoice" value="${i}" class="modal-check" ${i === 0 ? 'checked' : ''}>
+      <input type="radio" name="storeChoice" value="${i}" class="modal-check" ${i === (defaultIdx >= 0 ? defaultIdx : 0) ? 'checked' : ''}>
       <div class="modal-option-info">
         <div class="modal-option-name">${esc(s.name)}</div>
       </div>
@@ -470,6 +527,7 @@ function confirmStore() {
     aisle: 'Unknown',
     aisleOrder: 1,
     size: '',
+    stock: '',
     checked: false,
     catalogMatch: false
   });
@@ -484,6 +542,41 @@ function skipStore() {
   processNextUnknown();
 }
 
+// ============================================================
+// QTY EDIT MODAL
+// ============================================================
+function openQtyModal(e, id) {
+  e.stopPropagation();
+  const item = shoppingList.find(i => i.id === id);
+  if (!item) return;
+  editingItemId = id;
+  document.getElementById('qtyModalTitle').textContent = `Quantity — ${item.item || item.name}`;
+  document.getElementById('qtyInput').value = item.qty;
+  document.getElementById('qtyBackdrop').style.display = 'flex';
+}
+
+function stepQty(delta) {
+  const inp = document.getElementById('qtyInput');
+  inp.value = Math.max(1, parseInt(inp.value || 1) + delta);
+}
+
+async function confirmQty() {
+  const qty = parseInt(document.getElementById('qtyInput').value);
+  if (!qty || qty < 1) { showNotif('Enter a valid quantity', ''); return; }
+  const item = shoppingList.find(i => i.id === editingItemId);
+  if (item) {
+    item.qty = qty;
+    await saveList();
+    renderList();
+  }
+  closeQtyModal();
+}
+
+function closeQtyModal() {
+  document.getElementById('qtyBackdrop').style.display = 'none';
+  editingItemId = null;
+}
+
 function slugify(str) { return String(str||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
 
 // ============================================================
@@ -491,11 +584,8 @@ function slugify(str) { return String(str||'').toLowerCase().replace(/[^a-z0-9]+
 // ============================================================
 function renderList() {
   const el = document.getElementById('shoppingList');
-  const countEl = document.getElementById('itemCount');
   const clearRow = document.getElementById('clearRow');
-  const unchecked = shoppingList.filter(i => !i.checked).length;
   const total = shoppingList.length;
-  countEl.textContent = '';
   clearRow.style.display = total > 0 ? 'flex' : 'none';
 
   if (total === 0) {
@@ -515,12 +605,13 @@ function renderList() {
   let html = '';
   let storeIdx = 0;
   for (const [store, aisles] of Object.entries(byStore)) {
+    const allItems = Object.values(aisles).flat();
+    const storeTotal = allItems.length;
+    const storeUnchecked = allItems.filter(i => !i.checked).length;
     html += `<div class="store-section">`;
-    const storeTotal = Object.values(aisles).flat().length;
-    const storeUnchecked = Object.values(aisles).flat().filter(i => !i.checked).length;
     html += `<div class="store-label store-${storeIdx % 4}">${esc(store)}</div>`;
     html += `<div style="font-size:12px;color:var(--muted);margin-bottom:8px;">${storeUnchecked} of ${storeTotal} remaining</div>`;
-    for (const [aisle, items] of Object.entries(aisles)) {
+    for (const [, items] of Object.entries(aisles)) {
       html += `<div class="aisle-group">`;
       for (const item of items) html += renderItem(item);
       html += `</div>`;
@@ -534,7 +625,6 @@ function renderList() {
 function renderItem(item) {
   const checked = item.checked ? 'checked' : '';
   const unmatched = item.catalogMatch === false ? 'unmatched' : '';
-  const unitStr = '';
   const badge = item.catalogMatch === false ? '<span style="color:var(--danger);margin-left:6px;font-size:11px;">?</span>' : '';
   const sizeStr = item.size && item.size !== '?' ? ` · ${esc(item.size)}` : '';
   const stockStr = item.stock && item.stock !== '?' ? ` · Keep ${esc(item.stock)}` : '';
@@ -544,6 +634,7 @@ function renderItem(item) {
       <div class="item-name">(${item.qty}) ${esc(item.item||item.name)}${badge}</div>
       <div class="item-sub">${esc(item.store)} · ${esc(item.aisle)}${sizeStr}${stockStr}</div>
     </div>
+    <button class="qty-edit-btn" onclick="openQtyModal(event,'${item.id}')" title="Edit quantity">✎</button>
     <button class="delete-btn" onclick="deleteItem(event,'${item.id}')">✕</button>
   </div>`;
 }
@@ -556,17 +647,24 @@ async function toggleItem(id) {
   const item = shoppingList.find(i => i.id === id);
   if (item) { item.checked = !item.checked; await saveList(); renderList(); }
 }
+
 async function deleteItem(e, id) {
   e.stopPropagation();
+  const item = shoppingList.find(i => i.id === id);
+  if (!item) return;
+  if (!confirm(`Remove "${item.item || item.name}" from the list?`)) return;
   shoppingList = shoppingList.filter(i => i.id !== id);
-  await saveList(); renderList();
+  await saveList();
+  renderList();
 }
+
 async function clearList() {
   if (!confirm('Clear the entire shopping list?')) return;
   shoppingList = [];
   await fetch('/api/list', { method: 'DELETE' });
   renderList();
 }
+
 async function saveList() {
   await fetch('/api/list', { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(shoppingList) });
 }
@@ -592,33 +690,7 @@ function renderCatalog() {
       <td><input value="${esc(item.size||'')}" placeholder="16 oz…" onchange="updateCatalogItem(${idx},'size',this.value)"></td>
       <td><button class="del-row-btn" onclick="deleteCatalogRow(${idx})">✕</button></td>
     </tr>`).join('');
-}
-function updateCatalogItem(idx, field, value) { catalog.items[idx][field] = value; }
-function addCatalogRow() {
-  catalog.items.push({ id: 'new-'+Date.now(), item: '', store: catalog.stores[0]?.name||'Unknown', aisle: '', aisleOrder: 99, unit: '', stock: '', size: '' });
-  renderCatalog();
-  document.querySelectorAll('#catalogBody tr').forEach((r,i,a) => { if(i===a.length-1) r.querySelector('input')?.focus(); });
-}
-function deleteCatalogRow(idx) {
-  const item = catalog.items[idx];
-  if (!confirm(`Remove "${item.item}" from the catalog?`)) return;
-  catalog.items.splice(idx, 1);
-  renderCatalog();
   filterCatalog();
-}
-function addStore() {
-  const inp = document.getElementById('newStoreName');
-  const name = inp.value.trim();
-  if (!name) return;
-  catalog.stores.push({ id: slugify(name), name });
-  inp.value = '';
-  renderCatalog();
-}
-function removeStore(id) { catalog.stores = catalog.stores.filter(s => s.id !== id); renderCatalog(); }
-async function saveCatalog() {
-  catalog.items = catalog.items.map(item => ({ ...item, id: item.id || slugify(item.item||item.name||'item') }));
-  await fetch('/api/catalog', { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(catalog) });
-  showNotif('Catalog saved', 'success');
 }
 
 function filterCatalog() {
@@ -626,18 +698,49 @@ function filterCatalog() {
   document.querySelectorAll('#catalogBody tr').forEach((row, idx) => {
     const item = catalog.items[idx];
     if (!item) return;
-    const text = [item.item, item.store, item.aisle, item.unit, item.size, item.stock]
-      .join(' ').toLowerCase();
+    const text = [item.item, item.store, item.aisle, item.unit, item.size, item.stock].join(' ').toLowerCase();
     row.style.display = text.includes(term) ? '' : 'none';
   });
 }
 
-// ============================================================
-// SETTINGS
-// ============================================================
-function saveSettings() {
-  silenceTimeout = parseInt(document.getElementById('silenceTimeout').value || 30);
-  showNotif('Settings saved', 'success');
+function updateCatalogItem(idx, field, value) { catalog.items[idx][field] = value; }
+
+function addCatalogRow() {
+  const defaultStore = settings.defaultStore || catalog.stores[0]?.name || 'Unknown';
+  catalog.items.push({ id: 'new-'+Date.now(), item: '', store: defaultStore, aisle: '', aisleOrder: 99, unit: '', stock: '', size: '' });
+  renderCatalog();
+  // Scroll to and focus the new row, preserving filter
+  const rows = [...document.querySelectorAll('#catalogBody tr')].filter(r => r.style.display !== 'none');
+  rows[rows.length - 1]?.querySelector('input')?.focus();
+}
+
+function deleteCatalogRow(idx) {
+  const item = catalog.items[idx];
+  if (!confirm(`Remove "${item.item || 'this item'}" from the catalog?`)) return;
+  catalog.items.splice(idx, 1);
+  renderCatalog();
+}
+
+function addStore() {
+  const inp = document.getElementById('newStoreName');
+  const name = inp.value.trim();
+  if (!name) return;
+  catalog.stores.push({ id: slugify(name), name });
+  inp.value = '';
+  renderCatalog();
+  populateDefaultStoreSelect();
+}
+
+function removeStore(id) {
+  catalog.stores = catalog.stores.filter(s => s.id !== id);
+  renderCatalog();
+  populateDefaultStoreSelect();
+}
+
+async function saveCatalog() {
+  catalog.items = catalog.items.map(item => ({ ...item, id: item.id || slugify(item.item||item.name||'item') }));
+  await fetch('/api/catalog', { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(catalog) });
+  showNotif('Catalog saved', 'success');
 }
 
 // ============================================================

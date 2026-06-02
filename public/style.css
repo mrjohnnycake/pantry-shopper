@@ -420,7 +420,7 @@ select.inp { cursor: pointer; }
 }
 .catalog-table td input:focus { background: var(--surface2); }
 .catalog-table td select {
-  background: none;
+  background: var(--surface2);
   border: none;
   color: var(--text);
   font-family: 'Archivo', sans-serif;
@@ -564,3 +564,37 @@ select.inp { cursor: pointer; }
   display: flex;
   gap: 10px;
 }
+
+/* ---- QTY EDIT BUTTON on list items ---- */
+.qty-edit-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 15px;
+  padding: 4px;
+  line-height: 1;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.list-item:hover .qty-edit-btn { opacity: 1; }
+
+/* ---- QTY STEP BUTTONS in modal ---- */
+.qty-step-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.qty-step-btn:hover { background: var(--border); }
+.qty-step-btn:active { transform: scale(0.93); }
