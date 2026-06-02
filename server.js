@@ -62,7 +62,7 @@ app.post('/api/parse', async (req, res) => {
   const catalog = JSON.parse(fs.readFileSync(CATALOG_FILE));
 
   const catalogSummary = catalog.items.map(item =>
-    `id="${item.id}" item="${item.item}" store="${item.store}" aisle="${item.aisle}" aisleOrder=${item.aisleOrder} unit="${item.unit||''}" size="${item.size||''}"`
+    `id="${item.id}" item="${item.item}" store="${item.store}" aisle="${item.aisle}" aisleOrder=${item.aisleOrder} unit="${item.unit||''}" size="${item.size||''}" stock="${item.stock||''}"`
   ).join('\n');
 
   const prompt = `You are a shopping list assistant. Parse this voice/text transcript into a structured shopping list using the catalog below.
@@ -84,15 +84,15 @@ Instructions:
 Return ONLY a JSON object (no markdown):
 {
   "confirmed": [
-    { "id": "catalog-id", "item": "item name", "qty": 1, "unit": "unit", "store": "store", "aisle": "aisle", "aisleOrder": 1, "size": "size", "checked": false, "catalogMatch": true }
+    { "id": "catalog-id", "item": "item name", "qty": 1, "unit": "unit", "store": "store", "aisle": "aisle", "aisleOrder": 1, "size": "size", "stock": "stock", "checked": false, "catalogMatch": true }
   ],
   "ambiguous": [
     {
       "spoken": "what the user said",
       "qty": 1,
       "candidates": [
-        { "id": "catalog-id", "item": "item name", "qty": 1, "unit": "unit", "store": "store", "aisle": "aisle", "aisleOrder": 1, "size": "size", "checked": false, "catalogMatch": true },
-        { "id": "catalog-id-2", "item": "item name 2", "qty": 1, "unit": "unit", "store": "store2", "aisle": "aisle", "aisleOrder": 1, "size": "size", "checked": false, "catalogMatch": true }
+        { "id": "catalog-id", "item": "item name", "qty": 1, "unit": "unit", "store": "store", "aisle": "aisle", "aisleOrder": 1, "size": "size", "stock": "stock", "checked": false, "catalogMatch": true },
+        { "id": "catalog-id-2", "item": "item name 2", "qty": 1, "unit": "unit", "store": "store2", "aisle": "aisle", "aisleOrder": 1, "size": "size", "stock": "stock", "checked": false, "catalogMatch": true }
       ]
     }
   ],
