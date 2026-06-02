@@ -707,9 +707,9 @@ function updateCatalogItem(idx, field, value) { catalog.items[idx][field] = valu
 
 function addCatalogRow() {
   const defaultStore = settings.defaultStore || catalog.stores[0]?.name || 'Unknown';
-  catalog.items.push({ id: 'new-'+Date.now(), item: '', store: defaultStore, aisle: '', aisleOrder: 99, unit: '', stock: '', size: '' });
+  const term = document.getElementById('catalogSearch').value.trim();
+  catalog.items.push({ id: 'new-'+Date.now(), item: term, store: defaultStore, aisle: '', aisleOrder: 99, unit: '', stock: '', size: '' });
   renderCatalog();
-  // Scroll to and focus the new row, preserving filter
   const rows = [...document.querySelectorAll('#catalogBody tr')].filter(r => r.style.display !== 'none');
   rows[rows.length - 1]?.querySelector('input')?.focus();
 }
