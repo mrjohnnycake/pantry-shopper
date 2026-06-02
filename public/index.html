@@ -81,7 +81,6 @@
   </div>
   <div>
     <div class="section-title">Products</div>
-      <div class="section-title">Products</div>
       <div class="input-row" style="margin-bottom:12px;">
         <input class="inp" id="catalogSearch" placeholder="Filter products…" oninput="filterCatalog()">
         <button class="btn btn-ghost" style="flex:0;padding:10px 14px;" onclick="document.getElementById('catalogSearch').value='';filterCatalog()">✕</button>
@@ -596,7 +595,13 @@ function addCatalogRow() {
   renderCatalog();
   document.querySelectorAll('#catalogBody tr').forEach((r,i,a) => { if(i===a.length-1) r.querySelector('input')?.focus(); });
 }
-function deleteCatalogRow(idx) { catalog.items.splice(idx,1); renderCatalog(); }
+function deleteCatalogRow(idx) {
+  const item = catalog.items[idx];
+  if (!confirm(`Remove "${item.item}" from the catalog?`)) return;
+  catalog.items.splice(idx, 1);
+  renderCatalog();
+  filterCatalog();
+}
 function addStore() {
   const inp = document.getElementById('newStoreName');
   const name = inp.value.trim();
@@ -614,8 +619,11 @@ async function saveCatalog() {
 
 function filterCatalog() {
   const term = document.getElementById('catalogSearch').value.toLowerCase();
-  document.querySelectorAll('#catalogBody tr').forEach(row => {
-    const text = row.innerText.toLowerCase();
+  document.querySelectorAll('#catalogBody tr').forEach((row, idx) => {
+    const item = catalog.items[idx];
+    if (!item) return;
+    const text = [item.item, item.store, item.aisle, item.unit, item.size, item.stock]
+      .join(' ').toLowerCase();
     row.style.display = text.includes(term) ? '' : 'none';
   });
 }
