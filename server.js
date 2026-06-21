@@ -8,10 +8,12 @@ const PORT = process.env.PORT || 3006;
 const DATA_DIR = path.join(__dirname, 'data');
 const CATALOG_FILE = path.join(DATA_DIR, 'catalog.json');
 const LIST_FILE = path.join(DATA_DIR, 'list.json');
+const PENDING_FILE = path.join(DATA_DIR, 'pending.json');
 
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(CATALOG_FILE)) fs.writeFileSync(CATALOG_FILE, JSON.stringify(defaultCatalog(), null, 2));
 if (!fs.existsSync(LIST_FILE)) fs.writeFileSync(LIST_FILE, JSON.stringify([], null, 2));
+if (!fs.existsSync(PENDING_FILE)) fs.writeFileSync(PENDING_FILE, JSON.stringify([], null, 2));
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -24,6 +26,32 @@ app.put('/api/catalog', (req, res) => { fs.writeFileSync(CATALOG_FILE, JSON.stri
 app.get('/api/list', (req, res) => res.json(JSON.parse(fs.readFileSync(LIST_FILE))));
 app.put('/api/list', (req, res) => { fs.writeFileSync(LIST_FILE, JSON.stringify(req.body, null, 2)); res.json({ ok: true }); });
 app.delete('/api/list', (req, res) => { fs.writeFileSync(LIST_FILE, JSON.stringify([], null, 2)); res.json({ ok: true }); });
+
+// --- Pending items (saved for later) ---
+app.get('/api/pending', (req, res) => res.json(JSON.parse(fs.readFileSync(PENDING_FILE))));
+
+app.post('/api/pending', (req, res) => {
+  // items: array of { spoken, qty, type: 'ambiguous'|'unknown' }
+  const { items } = req.body;
+  const pending = JSON.parse(fs.readFileSync(PENDING_FILE));
+  const withIds = items.map(i => ({
+    id: 'pending-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7),
+    spoken: i.spoken,
+    qty: i.qty || 1,
+    type: i.type || 'unknown',
+    addedAt: new Date().toISOString()
+  }));
+  const merged = [...pending, ...withIds];
+  fs.writeFileSync(PENDING_FILE, JSON.stringify(merged, null, 2));
+  res.json({ pending: merged });
+});
+
+app.delete('/api/pending/:id', (req, res) => {
+  const pending = JSON.parse(fs.readFileSync(PENDING_FILE));
+  const filtered = pending.filter(p => p.id !== req.params.id);
+  fs.writeFileSync(PENDING_FILE, JSON.stringify(filtered, null, 2));
+  res.json({ pending: filtered });
+});
 
 // --- Pre-filter catalog by transcript keywords ---
 // Returns the top N most relevant items so we don't send 369 items to Claude every time
@@ -170,6 +198,69 @@ Return ONLY a JSON object (no markdown):
     res.json(parsed);
   } catch (err) {
     console.error('Claude error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Re-match a single pending item against the CURRENT catalog ---
+// Used when the user opens a pending item later — always re-runs fresh (Option B)
+app.post('/api/pending/rematch', async (req, res) => {
+  const { spoken, qty } = req.body;
+  const anthropicKey = process.env.ANTHROPIC_API_KEY;
+  if (!anthropicKey) return res.status(400).json({ error: 'ANTHROPIC_API_KEY not set in .env' });
+
+  const catalog = JSON.parse(fs.readFileSync(CATALOG_FILE));
+  const filteredItems = preFilterCatalog(spoken, catalog.items);
+
+  const catalogSummary = filteredItems.map(item =>
+    `id="${item.id}" item="${item.item}" store="${item.store}" aisle="${item.aisle}" aisleOrder=${item.aisleOrder} unit="${item.unit||''}" size="${item.size||''}" stock="${item.stock||''}"`
+  ).join('\n');
+
+  const prompt = `You are a shopping list assistant. Find catalog matches for this single item using the catalog below.
+
+CATALOG:
+${catalogSummary}
+
+ITEM: "${spoken}"
+
+Instructions:
+- Find matching catalog entries using fuzzy matching. Include ALL plausible matches (e.g. the same item at multiple stores).
+- Classify as one of:
+  - "confirmed": exactly one clear catalog match, high confidence
+  - "ambiguous": multiple possible catalog matches OR low confidence — include all candidates
+  - "unknown": no catalog match at all
+
+Return ONLY a JSON object (no markdown):
+{
+  "result": "confirmed" | "ambiguous" | "unknown",
+  "match": { "id": "catalog-id", "item": "item name", "unit": "unit", "store": "store", "aisle": "aisle", "aisleOrder": 1, "size": "size", "stock": "stock" },
+  "candidates": [
+    { "id": "catalog-id", "item": "item name", "unit": "unit", "store": "store", "aisle": "aisle", "aisleOrder": 1, "size": "size", "stock": "stock" }
+  ]
+}
+Only include "match" if result is "confirmed". Only include "candidates" if result is "ambiguous". Omit both if "unknown".`;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': anthropicKey,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5',
+        max_tokens: 1500,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await response.json();
+    if (data.error) return res.status(500).json({ error: data.error.message });
+    const text = data.content[0].text.trim();
+    const parsed = JSON.parse(text.replace(/```json|```/g, '').trim());
+    res.json(parsed);
+  } catch (err) {
+    console.error('Claude rematch error:', err);
     res.status(500).json({ error: err.message });
   }
 });

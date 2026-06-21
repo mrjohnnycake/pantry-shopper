@@ -25,6 +25,11 @@
 <!-- VOICE + LIST PANEL -->
 <div class="panel active" id="panel-voice">
 
+  <div class="pending-banner" id="pendingBanner" style="display:none" onclick="openPendingPanel()">
+    <span id="pendingBannerText">items need review</span>
+    <span class="pending-banner-arrow">→</span>
+  </div>
+
   <div class="voice-card">
     <div class="mic-row">
       <button class="mic-btn" id="micBtn" onclick="toggleRecording()">🎙️</button>
@@ -187,6 +192,30 @@ OPENAI_API_KEY=sk-...</pre>
   </div>
 </div>
 
+<!-- NOW OR LATER MODAL -->
+<div class="modal-backdrop" id="laterBackdrop" style="display:none">
+  <div class="modal" id="laterModal">
+    <div class="modal-title" id="laterModalTitle">Need a moment?</div>
+    <div class="modal-subtitle" id="laterModalSubtitle"></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="handleNow()">Handle Now</button>
+      <button class="btn btn-ghost" onclick="handleLater()">Save for Later</button>
+    </div>
+  </div>
+</div>
+
+<!-- PENDING ITEMS PANEL -->
+<div class="modal-backdrop" id="pendingBackdrop" style="display:none">
+  <div class="modal" id="pendingModal">
+    <div class="modal-title">Items Needing Review</div>
+    <div class="modal-subtitle">Tap an item to resolve it now.</div>
+    <div class="modal-options" id="pendingList"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closePendingPanel()">Close</button>
+    </div>
+  </div>
+</div>
+
 <div class="notif" id="notif"></div>
 
 <script>
@@ -215,6 +244,13 @@ let resolvedItems = [];
 let currentClarify = null;
 let currentUnknown = null;
 
+// Pending items (saved for later)
+let pendingItems = [];
+let currentPendingResolve = null; // set when resolving a pending item directly from the panel
+let itemsSavedForLaterThisSession = 0;
+let pendingNowOrLaterItem = null;
+let pendingNowOrLaterType = null;
+
 // Qty edit
 let editingItemId = null;
 
@@ -223,13 +259,15 @@ let editingItemId = null;
 // ============================================================
 async function init() {
   loadSettings();
-  await Promise.all([loadCatalog(), loadList()]);
+  await Promise.all([loadCatalog(), loadList(), loadPending()]);
   renderList();
   renderCatalog();
+  renderPendingBanner();
   populateDefaultStoreSelect();
 }
 async function loadCatalog() { const r = await fetch('/api/catalog'); catalog = await r.json(); }
 async function loadList() { const r = await fetch('/api/list'); shoppingList = await r.json(); }
+async function loadPending() { const r = await fetch('/api/pending'); pendingItems = await r.json(); }
 
 function loadSettings() {
   try {
@@ -424,17 +462,85 @@ async function submitTranscript() {
 }
 
 function processNextClarification() {
-  if (clarifyQueue.length > 0) showClarifyModal(clarifyQueue.shift());
-  else processNextUnknown();
+  if (clarifyQueue.length > 0) {
+    promptNowOrLater(clarifyQueue.shift(), 'ambiguous');
+  } else {
+    processNextUnknown();
+  }
 }
 
 function processNextUnknown() {
-  if (unknownQueue.length > 0) showStoreModal(unknownQueue.shift());
-  else commitAllItems();
+  if (unknownQueue.length > 0) {
+    promptNowOrLater(unknownQueue.shift(), 'unknown');
+  } else {
+    finishResolutionFlow();
+  }
 }
 
-async function commitAllItems() {
-  if (resolvedItems.length === 0) { showNotif('No items added', ''); return; }
+async function finishResolutionFlow() {
+  const addedCount = resolvedItems.length;
+  await commitAllItemsSilently();
+  const savedCount = itemsSavedForLaterThisSession;
+  itemsSavedForLaterThisSession = 0;
+
+  if (addedCount === 0 && savedCount === 0) {
+    showNotif('No items added', '');
+  } else if (addedCount > 0 && savedCount > 0) {
+    showNotif(`Added ${addedCount} item${addedCount !== 1 ? 's' : ''}, saved ${savedCount} for later`, 'success');
+  } else if (addedCount > 0) {
+    showNotif(`Added ${addedCount} item${addedCount !== 1 ? 's' : ''} to list`, 'success');
+  } else {
+    showNotif(`Saved ${savedCount} item${savedCount !== 1 ? 's' : ''} for later`, '');
+  }
+}
+
+function promptNowOrLater(item, type) {
+  pendingNowOrLaterItem = item;
+  pendingNowOrLaterType = type;
+  document.getElementById('laterModalTitle').textContent = `About "${item.spoken}"`;
+  document.getElementById('laterModalSubtitle').textContent = type === 'ambiguous'
+    ? 'A few products could match this. Sort it out now, or save it for later?'
+    : "This item isn't in the catalog yet. Add the details now, or save it for later?";
+  document.getElementById('laterBackdrop').style.display = 'flex';
+}
+
+function handleNow() {
+  document.getElementById('laterBackdrop').style.display = 'none';
+  const item = pendingNowOrLaterItem;
+  const type = pendingNowOrLaterType;
+  pendingNowOrLaterItem = null;
+  pendingNowOrLaterType = null;
+  if (type === 'ambiguous') showClarifyModal(item);
+  else showStoreModal(item);
+}
+
+async function handleLater() {
+  document.getElementById('laterBackdrop').style.display = 'none';
+  const item = pendingNowOrLaterItem;
+  const type = pendingNowOrLaterType;
+  pendingNowOrLaterItem = null;
+  pendingNowOrLaterType = null;
+
+  try {
+    const r = await fetch('/api/pending', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: [{ spoken: item.spoken, qty: item.qty || 1, type }] })
+    });
+    const data = await r.json();
+    pendingItems = data.pending;
+    renderPendingBanner();
+    itemsSavedForLaterThisSession++;
+  } catch (e) {
+    showNotif('Error saving for later: ' + e.message, 'error');
+  }
+
+  if (type === 'ambiguous') processNextClarification();
+  else processNextUnknown();
+}
+
+async function commitAllItemsSilently() {
+  if (resolvedItems.length === 0) return;
   try {
     const r = await fetch('/api/list/add', {
       method: 'POST',
@@ -444,8 +550,6 @@ async function commitAllItems() {
     const data = await r.json();
     shoppingList = data.list;
     renderList();
-    const n = resolvedItems.length;
-    showNotif(`Added ${n} item${n !== 1 ? 's' : ''} to list`, 'success');
     resolvedItems = [];
   } catch (e) {
     showNotif('Error saving list: ' + e.message, 'error');
@@ -474,14 +578,22 @@ function showClarifyModal(ambiguous) {
   document.getElementById('modalBackdrop').style.display = 'flex';
 }
 
-function confirmClarification() {
+async function confirmClarification() {
   const checked = [...document.querySelectorAll('#modalOptions input[type=checkbox]:checked')];
   if (checked.length === 0) { showNotif('Select at least one option', ''); return; }
-  for (const cb of checked) {
-    const candidate = currentClarify.candidates[parseInt(cb.value)];
-    resolvedItems.push({ ...candidate, qty: currentClarify.qty });
-  }
+  const newItems = checked.map(cb => ({ ...currentClarify.candidates[parseInt(cb.value)], qty: currentClarify.qty }));
+
   document.getElementById('modalBackdrop').style.display = 'none';
+
+  if (currentPendingResolve) {
+    await commitItemsDirectly(newItems);
+    await removeFromPending(currentPendingResolve.id);
+    currentClarify = null;
+    currentPendingResolve = null;
+    return;
+  }
+
+  resolvedItems.push(...newItems);
   currentClarify = null;
   processNextClarification();
 }
@@ -489,20 +601,24 @@ function confirmClarification() {
 function skipClarification() {
   document.getElementById('modalBackdrop').style.display = 'none';
   currentClarify = null;
+  if (currentPendingResolve) { currentPendingResolve = null; return; }
   processNextClarification();
 }
 
 // Route ambiguous item to the unknown/store-picker flow instead
 function routeToUnknown() {
   document.getElementById('modalBackdrop').style.display = 'none';
-  if (currentClarify) {
-    unknownQueue.unshift({
-      spoken: currentClarify.spoken,
-      qty: currentClarify.qty,
-      item: currentClarify.spoken,
-      unit: ''
-    });
-    currentClarify = null;
+  const spoken = currentClarify?.spoken;
+  const qty = currentClarify?.qty;
+  currentClarify = null;
+
+  if (currentPendingResolve) {
+    showStoreModal({ spoken, qty, item: spoken, unit: '' });
+    return;
+  }
+
+  if (spoken) {
+    unknownQueue.unshift({ spoken, qty, item: spoken, unit: '' });
   }
   processNextClarification();
 }
@@ -584,7 +700,7 @@ async function confirmStore() {
   const itemName = currentUnknown.item || currentUnknown.spoken;
   const newId = slugify(itemName) + '-' + Date.now();
 
-  resolvedItems.push({
+  const newItem = {
     id: newId,
     item: itemName,
     qty: currentUnknown.qty || 1,
@@ -596,7 +712,7 @@ async function confirmStore() {
     stock: stock,
     checked: false,
     catalogMatch: true
-  });
+  };
 
   // Also add it to the catalog so it's remembered for next time
   catalog.items.push({
@@ -612,6 +728,16 @@ async function confirmStore() {
   await fetch('/api/catalog', { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(catalog) });
 
   document.getElementById('storeBackdrop').style.display = 'none';
+
+  if (currentPendingResolve) {
+    await commitItemsDirectly([newItem]);
+    await removeFromPending(currentPendingResolve.id);
+    currentUnknown = null;
+    currentPendingResolve = null;
+    return;
+  }
+
+  resolvedItems.push(newItem);
   currentUnknown = null;
   processNextUnknown();
 }
@@ -619,6 +745,7 @@ async function confirmStore() {
 function skipStore() {
   document.getElementById('storeBackdrop').style.display = 'none';
   currentUnknown = null;
+  if (currentPendingResolve) { currentPendingResolve = null; return; }
   processNextUnknown();
 }
 
@@ -658,6 +785,115 @@ function closeQtyModal() {
 }
 
 function slugify(str) { return String(str||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
+
+// ============================================================
+// PENDING ITEMS (saved for later)
+// ============================================================
+function renderPendingBanner() {
+  const banner = document.getElementById('pendingBanner');
+  const text = document.getElementById('pendingBannerText');
+  if (pendingItems.length === 0) {
+    banner.style.display = 'none';
+    return;
+  }
+  text.textContent = `${pendingItems.length} item${pendingItems.length !== 1 ? 's' : ''} need${pendingItems.length === 1 ? 's' : ''} review`;
+  banner.style.display = 'flex';
+}
+
+function openPendingPanel() {
+  renderPendingList();
+  document.getElementById('pendingBackdrop').style.display = 'flex';
+}
+
+function closePendingPanel() {
+  document.getElementById('pendingBackdrop').style.display = 'none';
+}
+
+function renderPendingList() {
+  const el = document.getElementById('pendingList');
+  if (pendingItems.length === 0) {
+    el.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:8px 4px;">Nothing pending — nice work.</div>';
+    return;
+  }
+  el.innerHTML = pendingItems.map(p => `
+    <div class="modal-option" style="cursor:pointer;" onclick="resolvePendingItem('${p.id}')">
+      <div class="modal-option-info">
+        <div class="modal-option-name">(${p.qty}) ${esc(p.spoken)}</div>
+        <div class="modal-option-sub">${p.type === 'ambiguous' ? 'Multiple possible matches' : 'Not in catalog'}</div>
+      </div>
+      <button class="del-row-btn" onclick="event.stopPropagation();discardPendingItem('${p.id}')" title="Discard">✕</button>
+    </div>
+  `).join('');
+}
+
+async function resolvePendingItem(id) {
+  const item = pendingItems.find(p => p.id === id);
+  if (!item) return;
+  currentPendingResolve = item;
+  closePendingPanel();
+
+  showToast('Checking your catalog…');
+  try {
+    const r = await fetch('/api/pending/rematch', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ spoken: item.spoken, qty: item.qty })
+    });
+    const data = await r.json();
+    hideToast();
+    if (data.error) { showNotif(data.error, 'error'); currentPendingResolve = null; return; }
+
+    if (data.result === 'confirmed' && data.match) {
+      const resolved = { ...data.match, qty: item.qty, checked: false, catalogMatch: true };
+      await commitItemsDirectly([resolved]);
+      await removeFromPending(id);
+      currentPendingResolve = null;
+      showNotif(`Added "${item.spoken}" to the list`, 'success');
+    } else if (data.result === 'ambiguous' && data.candidates) {
+      showClarifyModal({ spoken: item.spoken, qty: item.qty, candidates: data.candidates });
+    } else {
+      showStoreModal({ spoken: item.spoken, qty: item.qty, item: item.spoken, unit: '' });
+    }
+  } catch (e) {
+    hideToast();
+    showNotif('Error: ' + e.message, 'error');
+    currentPendingResolve = null;
+  }
+}
+
+async function discardPendingItem(id) {
+  if (!confirm('Discard this item without adding it anywhere?')) return;
+  await removeFromPending(id);
+  renderPendingList();
+}
+
+async function removeFromPending(id) {
+  try {
+    const r = await fetch('/api/pending/' + id, { method: 'DELETE' });
+    const data = await r.json();
+    pendingItems = data.pending;
+    renderPendingBanner();
+  } catch (e) {
+    showNotif('Error updating pending list: ' + e.message, 'error');
+  }
+}
+
+// Commit one or more fully-resolved items straight to the shopping list
+// (used when resolving from the Pending panel, outside the normal queue flow)
+async function commitItemsDirectly(items) {
+  try {
+    const r = await fetch('/api/list/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items })
+    });
+    const data = await r.json();
+    shoppingList = data.list;
+    renderList();
+  } catch (e) {
+    showNotif('Error saving list: ' + e.message, 'error');
+  }
+}
 
 // ============================================================
 // SHOPPING LIST
