@@ -83,9 +83,14 @@
   </div>
   <div>
     <div class="section-title">Products</div>
-    <div class="input-row" style="margin-bottom:12px;">
+    <div class="input-row" style="margin-bottom:8px;">
       <input class="inp" id="catalogSearch" placeholder="Filter products…" oninput="filterCatalog()">
       <button class="btn btn-ghost" style="flex:0;padding:10px 14px;" onclick="document.getElementById('catalogSearch').value='';filterCatalog()">✕</button>
+    </div>
+    <div class="store-chip-row" style="margin-bottom:12px;">
+      <label class="filter-chip"><input type="checkbox" id="filterMissingUnit" onchange="filterCatalog()"> Missing Unit</label>
+      <label class="filter-chip"><input type="checkbox" id="filterMissingStock" onchange="filterCatalog()"> Missing Stock</label>
+      <label class="filter-chip"><input type="checkbox" id="filterMissingSize" onchange="filterCatalog()"> Missing Size</label>
     </div>
     <div class="catalog-table-wrap">
       <table class="catalog-table">
@@ -535,6 +540,11 @@ function aislesForStore(storeName) {
   return [...set].sort();
 }
 
+function aisleOrderForStoreAisle(storeName, aisleName) {
+  const match = catalog.items.find(i => i.store === storeName && i.aisle === aisleName && i.aisleOrder != null);
+  return match ? match.aisleOrder : null;
+}
+
 function populateAisleSelect() {
   const checked = document.querySelector('#storeOptions input[type=radio]:checked');
   const storeName = checked ? catalog.stores[parseInt(checked.value)].name : null;
@@ -567,6 +577,8 @@ async function confirmStore() {
   const aisleSel = document.getElementById('unknownAisleSelect').value;
   const aisleNew = document.getElementById('unknownAisleNew').value.trim();
   const aisle = aisleSel === '__new__' ? (aisleNew || 'Unknown') : (aisleSel || 'Unknown');
+  const existingOrder = aisleSel === '__new__' ? null : aisleOrderForStoreAisle(store.name, aisle);
+  const aisleOrder = existingOrder != null ? existingOrder : 1;
 
   const stock = document.getElementById('unknownStock').value.trim();
   const itemName = currentUnknown.item || currentUnknown.spoken;
@@ -579,11 +591,11 @@ async function confirmStore() {
     unit: currentUnknown.unit || '',
     store: store.name,
     aisle: aisle,
-    aisleOrder: 1,
+    aisleOrder: aisleOrder,
     size: '',
     stock: stock,
     checked: false,
-    catalogMatch: false
+    catalogMatch: true
   });
 
   // Also add it to the catalog so it's remembered for next time
@@ -592,7 +604,7 @@ async function confirmStore() {
     item: itemName,
     store: store.name,
     aisle: aisle,
-    aisleOrder: 1,
+    aisleOrder: aisleOrder,
     unit: currentUnknown.unit || '',
     stock: stock,
     size: ''
@@ -769,7 +781,7 @@ function renderCatalog() {
           style="display:${item.aisle && !aislesForStore(item.store).includes(item.aisle) ? '' : 'none'};margin-top:4px;width:100%;"
           onchange="updateCatalogItem(${idx},'aisle',this.value)">
       </td>
-      <td><input type="number" value="${item.aisleOrder}" style="width:48px" onchange="updateCatalogItem(${idx},'aisleOrder',parseInt(this.value))"></td>
+      <td><input id="aisleOrder-${idx}" type="number" value="${item.aisleOrder}" style="width:48px" onchange="updateCatalogItem(${idx},'aisleOrder',parseInt(this.value))"></td>
       <td><input value="${esc(item.unit||'')}" placeholder="cans…" onchange="updateCatalogItem(${idx},'unit',this.value)"></td>
       <td><input value="${esc(item.stock||'')}" placeholder="0" style="width:40px" onchange="updateCatalogItem(${idx},'stock',this.value)"></td>
       <td><input value="${esc(item.size||'')}" placeholder="16 oz…" onchange="updateCatalogItem(${idx},'size',this.value)"></td>
@@ -806,16 +818,36 @@ function onCatalogAisleSelectChange(idx) {
     newInput.style.display = 'none';
     newInput.value = '';
     updateCatalogItem(idx, 'aisle', sel.value);
+    const order = aisleOrderForStoreAisle(catalog.items[idx].store, sel.value);
+    if (order != null) {
+      document.getElementById(`aisleOrder-${idx}`).value = order;
+      updateCatalogItem(idx, 'aisleOrder', order);
+    }
   }
+}
+
+function isMissing(val) {
+  return !val || val.trim() === '' || val.trim() === '?';
 }
 
 function filterCatalog() {
   const term = document.getElementById('catalogSearch').value.toLowerCase();
+  const needUnit = document.getElementById('filterMissingUnit').checked;
+  const needStock = document.getElementById('filterMissingStock').checked;
+  const needSize = document.getElementById('filterMissingSize').checked;
+
   document.querySelectorAll('#catalogBody tr').forEach((row, idx) => {
     const item = catalog.items[idx];
     if (!item) return;
+
     const text = [item.item, item.store, item.aisle, item.unit, item.size, item.stock].join(' ').toLowerCase();
-    row.style.display = text.includes(term) ? '' : 'none';
+    let visible = text.includes(term);
+
+    if (needUnit && !isMissing(item.unit)) visible = false;
+    if (needStock && !isMissing(item.stock)) visible = false;
+    if (needSize && !isMissing(item.size)) visible = false;
+
+    row.style.display = visible ? '' : 'none';
   });
 }
 

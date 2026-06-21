@@ -369,6 +369,29 @@ header {
   padding: 0;
 }
 
+.filter-chip {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all 0.15s;
+}
+.filter-chip:has(input:checked) {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(232, 197, 71, 0.08);
+}
+.filter-chip input {
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
 .input-row { display: flex; gap: 8px; margin-bottom: 12px; }
 .inp {
   background: var(--surface);
