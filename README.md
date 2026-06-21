@@ -49,7 +49,7 @@ A voice-driven shopping list app built around the "working pantry" model — kee
 - Docker (these instructions use Docker Compose)
 - An Anthropic API key — https://console.anthropic.com
 - An OpenAI API key — https://platform.openai.com (used for Whisper audio transcription)
-- You need to build your own catalog as my data will probably be useless to you unless you live in my vicinity. I have included `catalog-example.xlsx` as an example and every product is something I buy from the store I buy it at. Edit it to your liking in a spreadsheet and then export it as a `.csv` file. After that I had Claude convert it to the `.json` format for me but you can convert it however you like. 
+- You need to build your own catalog as my data will probably be useless to you unless you live in my vicinity. I have included `catalog-example.xlsx` as a starting point — every product is something I buy and from the store I buy it at. Edit it to your liking in a spreadsheet, then see **[Building Your Catalog](#building-your-catalog)** below for how to convert it into the `.json` format the app uses.
 	- The `aisleOrder` is the order that you walk through your store. At WinCo, the first section I shop at after entering the store is the Fruit section so it is number 1, Vegetables is number 2, etc. and you could say the last section is the checkout aisle. The value to including this is that the shopping list is built in order of when you will encounter the products in the store. If you buy fruit first it's annoying to have the fruit on the bottom or middle of your shopping list so this is made to simply the list a bit and I find after you do the initial legwork of entering the order it is a very nice feature. 
 
 
@@ -78,6 +78,8 @@ docker compose up -d
 ```
 
 Open `http://your-server-ip:3006` on your phone.
+
+> **First run note:** if `./data/catalog.json` doesn't exist yet, the container automatically seeds it with the sanitized example catalog (the same one in `catalog-example.xlsx`) so you have something to start editing right away. Once that file exists, it's yours — the container will never overwrite or touch it again on any restart, pull, or update.
 
 ---
 
@@ -138,6 +140,37 @@ data/
 ## Hosting
 
 HTTPS is handled by Cloudflare, which is required for microphone access on mobile browsers.
+
+---
+
+## Building Your Catalog
+
+Your catalog lives at `data/catalog.json`. The easiest way to build or update it is in a spreadsheet, then convert it — you have two options:
+
+### Option 1: Conversion script (recommended)
+
+The repo includes `scripts/convert-catalog.js`, which turns a `.xlsx`, `.xls`, or `.csv` file into a properly formatted `catalog.json`.
+
+```bash
+# One-time setup — installs the spreadsheet parser (not needed at runtime)
+npm install --no-save xlsx
+
+# Convert your spreadsheet
+node scripts/convert-catalog.js my-catalog.xlsx
+```
+
+This writes to `data/catalog.json` by default. To convert to a different location instead (so you can review before replacing your real catalog):
+```bash
+node scripts/convert-catalog.js my-catalog.xlsx --out data/catalog-new.json
+```
+
+**The script will not overwrite an existing `catalog.json`** — if one already exists at the destination, it stops and tells you to choose a different `--out` path. Once you're happy with the result, rename it or copy it over manually.
+
+Your spreadsheet needs these column headers (case-insensitive, any order): `item`, `store`, `aisle`, `aisleOrder`, `unit`, `stock`, `size`, and optionally `id`. Leave `unit`, `stock`, or `size` blank, or use `?` as a placeholder reminder to fill in later — both are preserved as-is.
+
+### Option 2: Ask an AI to convert it
+
+If you'd rather not run the script, you can give your spreadsheet (or a CSV export of it) to an AI like Claude and ask it to convert it to the catalog JSON structure documented below. This works fine for smaller catalogs but is more prone to small mistakes on large spreadsheets (hundreds of rows) than the script, so double-check the output either way.
 
 ---
 

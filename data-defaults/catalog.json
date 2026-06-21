@@ -1,0 +1,3598 @@
+{
+  "stores": [
+    {
+      "id": "costco",
+      "name": "Costco"
+    },
+    {
+      "id": "winco",
+      "name": "WinCo"
+    },
+    {
+      "id": "other",
+      "name": "Other"
+    }
+  ],
+  "items": [
+    {
+      "id": "aluminum-foil-12",
+      "item": "Aluminum foil, 12\"",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "1000 ft"
+    },
+    {
+      "id": "aluminum-foil-18",
+      "item": "Aluminum foil, 18\"",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "750 ft"
+    },
+    {
+      "id": "anchovies",
+      "item": "Anchovies",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "cans",
+      "stock": "4",
+      "size": "2 oz"
+    },
+    {
+      "id": "apple-cider-hot-mix",
+      "item": "Apple cider hot mix",
+      "store": "WinCo",
+      "aisle": "Cereal / Coffee / Peanut Butter / Bars",
+      "aisleOrder": 11,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "green-apples",
+      "item": "Green apples",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "-",
+      "stock": "8",
+      "size": "5 lb"
+    },
+    {
+      "id": "red-apples",
+      "item": "Red apples",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "-",
+      "stock": "8",
+      "size": "1 lb"
+    },
+    {
+      "id": "yellow-apple",
+      "item": "Yellow apple",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "-",
+      "stock": "8",
+      "size": "1 lb"
+    },
+    {
+      "id": "applesauce-jars",
+      "item": "Applesauce jars (No sugar added)",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "jars",
+      "stock": "6",
+      "size": "47 oz"
+    },
+    {
+      "id": "applesauce-pouches",
+      "item": "Applesauce pouches",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "boxes",
+      "stock": "?",
+      "size": "?"
+    },
+    {
+      "id": "avocado",
+      "item": "Avocado",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "-",
+      "stock": "2",
+      "size": "1 ea"
+    },
+    {
+      "id": "baby-crackers-puffs",
+      "item": "Baby crackers or puffs",
+      "store": "WinCo",
+      "aisle": "Crackers / Baby",
+      "aisleOrder": 9,
+      "unit": "containers",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "baby-food-stage-1-2",
+      "item": "Baby food jars (stage 1 & 2)",
+      "store": "WinCo",
+      "aisle": "Crackers / Baby",
+      "aisleOrder": 9,
+      "unit": "jars",
+      "stock": "30",
+      "size": "?"
+    },
+    {
+      "id": "bacon",
+      "item": "Bacon",
+      "store": "Costco",
+      "aisle": "Refrigerated (Milk / Eggs)",
+      "aisleOrder": 13,
+      "unit": "packages",
+      "stock": "2",
+      "size": "24 oz"
+    },
+    {
+      "id": "bagels",
+      "item": "Bagels",
+      "store": "WinCo",
+      "aisle": "Bakery",
+      "aisleOrder": 14,
+      "unit": "-",
+      "stock": "0",
+      "size": "1 ea"
+    },
+    {
+      "id": "baking-powder",
+      "item": "Baking powder",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "cans",
+      "stock": "1",
+      "size": "8.1 oz"
+    },
+    {
+      "id": "baking-soda",
+      "item": "Baking soda",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "bags",
+      "stock": "2",
+      "size": "16 oz"
+    },
+    {
+      "id": "bananas-by-the-bunch",
+      "item": "Bananas, by the bunch",
+      "store": "Costco",
+      "aisle": "Produce (room temp)",
+      "aisleOrder": 9,
+      "unit": "bunch",
+      "stock": "5",
+      "size": "1 bunch"
+    },
+    {
+      "id": "bananas-by-the-pound",
+      "item": "Bananas, by the pound",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "pounds",
+      "stock": "0",
+      "size": "1 lb"
+    },
+    {
+      "id": "assorted-band-aids",
+      "item": "Assorted Band-Aids",
+      "store": "WinCo",
+      "aisle": "Health",
+      "aisleOrder": 10,
+      "unit": "boxes",
+      "stock": "0",
+      "size": "100 ct"
+    },
+    {
+      "id": "bbq-sauce",
+      "item": "BBQ sauce",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "bottles",
+      "stock": "2",
+      "size": "18 oz"
+    },
+    {
+      "id": "black-beans-canned",
+      "item": "Black beans (canned)",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "cans",
+      "stock": "16",
+      "size": "1 lb"
+    },
+    {
+      "id": "kidney-beans-canned",
+      "item": "Kidney beans (canned)",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "cans",
+      "stock": "16",
+      "size": "1 lb"
+    },
+    {
+      "id": "pinto-beans-dry",
+      "item": "Pinto beans (dry)",
+      "store": "Costco",
+      "aisle": "Main Food Aisles",
+      "aisleOrder": 19,
+      "unit": "bag",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "refried-beans-canned",
+      "item": "Refried beans",
+      "store": "WinCo",
+      "aisle": "Chips / Mexican / Popcorn",
+      "aisleOrder": 21,
+      "unit": "cans",
+      "stock": "16",
+      "size": "16 oz"
+    },
+    {
+      "id": "beets",
+      "item": "Beets",
+      "store": "WinCo",
+      "aisle": "Veggies",
+      "aisleOrder": 2,
+      "unit": "-",
+      "stock": "0",
+      "size": "1 bunch"
+    },
+    {
+      "id": "green-bell-pepper",
+      "item": "Green bell pepper",
+      "store": "WinCo",
+      "aisle": "Veggies",
+      "aisleOrder": 2,
+      "unit": "-",
+      "stock": "2",
+      "size": "1 ea"
+    },
+    {
+      "id": "orange-bell-pepper",
+      "item": "Orange bell pepper",
+      "store": "WinCo",
+      "aisle": "Veggies",
+      "aisleOrder": 2,
+      "unit": "-",
+      "stock": "2",
+      "size": "1 ea"
+    },
+    {
+      "id": "red-bell-pepper",
+      "item": "Red bell pepper",
+      "store": "WinCo",
+      "aisle": "Veggies",
+      "aisleOrder": 2,
+      "unit": "-",
+      "stock": "2",
+      "size": "1 ea"
+    },
+    {
+      "id": "yellow-bell-pepper",
+      "item": "Yellow bell pepper",
+      "store": "WinCo",
+      "aisle": "Veggies",
+      "aisleOrder": 2,
+      "unit": "-",
+      "stock": "2",
+      "size": "1 ea"
+    },
+    {
+      "id": "frozen-mixed-berries",
+      "item": "Frozen mixed berries",
+      "store": "Costco",
+      "aisle": "Freezer",
+      "aisleOrder": 12,
+      "unit": "bags",
+      "stock": "2",
+      "size": "64 oz"
+    },
+    {
+      "id": "raspberries",
+      "item": "Raspberries",
+      "store": "Costco",
+      "aisle": "Produce (walk-in cooler)",
+      "aisleOrder": 10,
+      "unit": "containers",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "biscuit-baking-mix",
+      "item": "Biscuit & Baking Mix",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "40 oz"
+    },
+    {
+      "id": "bleach",
+      "item": "Bleach",
+      "store": "WinCo",
+      "aisle": "Cleaning",
+      "aisleOrder": 15,
+      "unit": "jugs",
+      "stock": "4",
+      "size": "96 oz"
+    },
+    {
+      "id": "beef-boullion",
+      "item": "Beef boullion",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "jars",
+      "stock": "1",
+      "size": "4 oz"
+    },
+    {
+      "id": "chicken-boullion",
+      "item": "Chicken boullion",
+      "store": "Costco",
+      "aisle": "Oil / Spices / Baking",
+      "aisleOrder": 18,
+      "unit": "jars",
+      "stock": "2",
+      "size": "16 oz"
+    },
+    {
+      "id": "vegetable-boullion",
+      "item": "Vegetable boullion",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "jars",
+      "stock": "1",
+      "size": "8 oz"
+    },
+    {
+      "id": "english-muffins-regular",
+      "item": "English muffins regular",
+      "store": "WinCo",
+      "aisle": "Bread",
+      "aisleOrder": 22,
+      "unit": "sleeves",
+      "stock": "2",
+      "size": "1 ea"
+    },
+    {
+      "id": "english-muffins-whole-wheat",
+      "item": "English muffins whole wheat",
+      "store": "WinCo",
+      "aisle": "Bread",
+      "aisleOrder": 22,
+      "unit": "sleeves",
+      "stock": "2",
+      "size": "1 ea"
+    },
+    {
+      "id": "bread-sourdough-sliced",
+      "item": "Sliced sourdough bread",
+      "store": "WinCo",
+      "aisle": "Bread",
+      "aisleOrder": 22,
+      "unit": "loaves",
+      "stock": "2",
+      "size": "1 ea"
+    },
+    {
+      "id": "bread-whole-wheat",
+      "item": "Whole wheat bread",
+      "store": "WinCo",
+      "aisle": "Bread",
+      "aisleOrder": 22,
+      "unit": "loaves",
+      "stock": "2",
+      "size": "1 ea"
+    },
+    {
+      "id": "broccoli-crowns",
+      "item": "Broccoli crowns",
+      "store": "WinCo",
+      "aisle": "Veggies",
+      "aisleOrder": 2,
+      "unit": "crowns",
+      "stock": "3",
+      "size": "1 lb"
+    },
+    {
+      "id": "chicken-broth-canned",
+      "item": "Chicken broth canned",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "cans",
+      "stock": "16",
+      "size": "14.5 oz"
+    },
+    {
+      "id": "brownie-mix",
+      "item": "Brownie mix",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "boxes",
+      "stock": "0",
+      "size": "18.4 oz"
+    },
+    {
+      "id": "salted-butter",
+      "item": "Salted butter",
+      "store": "Costco",
+      "aisle": "Refrigerated (Milk / Eggs)",
+      "aisleOrder": 13,
+      "unit": "boxes",
+      "stock": "4",
+      "size": "16 oz"
+    },
+    {
+      "id": "cake-mix-chocolate",
+      "item": "Chocolate Cake mix",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "boxes",
+      "stock": "6",
+      "size": "15.25 oz"
+    },
+    {
+      "id": "cake-mix-vanilla",
+      "item": "Vanilla Cake mix",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "boxes",
+      "stock": "6",
+      "size": "15.25 oz"
+    },
+    {
+      "id": "cake-sprinkles",
+      "item": "Cake sprinkles",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "bottles",
+      "stock": "4",
+      "size": "9 oz"
+    },
+    {
+      "id": "birthday-cake-candles",
+      "item": "Birthday cake candles",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "boxes",
+      "stock": "6",
+      "size": "24 ea"
+    },
+    {
+      "id": "cantaloupe",
+      "item": "Cantaloupe",
+      "store": "Costco",
+      "aisle": "Produce (room temp)",
+      "aisleOrder": 9,
+      "unit": "-",
+      "stock": "1",
+      "size": "1 ea"
+    },
+    {
+      "id": "capers",
+      "item": "Capers",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "jars",
+      "stock": "1",
+      "size": "4 oz"
+    },
+    {
+      "id": "baby-carrots",
+      "item": "Baby carrots",
+      "store": "Costco",
+      "aisle": "Produce (walk-in cooler)",
+      "aisleOrder": 10,
+      "unit": "bags",
+      "stock": "2",
+      "size": "32 oz"
+    },
+    {
+      "id": "dry-cat-food",
+      "item": "Dry cat food",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "bags",
+      "stock": "2",
+      "size": "18 lb"
+    },
+    {
+      "id": "wet-cat-food",
+      "item": "Wet cat food",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "cans",
+      "stock": "24",
+      "size": "5.5 oz"
+    },
+    {
+      "id": "cat-litter",
+      "item": "Cat Litter",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "bags",
+      "stock": "2",
+      "size": "42 lb"
+    },
+    {
+      "id": "cauliflower",
+      "item": "Cauliflower",
+      "store": "WinCo",
+      "aisle": "Veggies",
+      "aisleOrder": 2,
+      "unit": "heads",
+      "stock": "1",
+      "size": "1 ea"
+    },
+    {
+      "id": "celery",
+      "item": "Celery",
+      "store": "Costco",
+      "aisle": "Produce (walk-in cooler)",
+      "aisleOrder": 10,
+      "unit": "-",
+      "stock": "1",
+      "size": "2.5 lb"
+    },
+    {
+      "id": "cheerios",
+      "item": "Cheerios",
+      "store": "Costco",
+      "aisle": "Main Food Aisles",
+      "aisleOrder": 19,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "40.7 oz"
+    },
+    {
+      "id": "cereal-other",
+      "item": "Cereal, other",
+      "store": "WinCo",
+      "aisle": "Cereal / Coffee / Peanut Butter / Bars",
+      "aisleOrder": 11,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "12 oz"
+    },
+    {
+      "id": "american-cheese",
+      "item": "American cheese",
+      "store": "WinCo",
+      "aisle": "Cheese",
+      "aisleOrder": 4,
+      "unit": "things",
+      "stock": "0",
+      "size": "?"
+    },
+    {
+      "id": "blue-cheese",
+      "item": "Blue cheese",
+      "store": "WinCo",
+      "aisle": "Cheese",
+      "aisleOrder": 4,
+      "unit": "containers",
+      "stock": "0",
+      "size": "?"
+    },
+    {
+      "id": "cheddar-cheese-block",
+      "item": "Cheddar cheese block",
+      "store": "WinCo",
+      "aisle": "Cheese",
+      "aisleOrder": 4,
+      "unit": "blocks",
+      "stock": "2",
+      "size": "1 lb"
+    },
+    {
+      "id": "feta-cheese",
+      "item": "Feta cheese",
+      "store": "WinCo",
+      "aisle": "Cheese",
+      "aisleOrder": 4,
+      "unit": "containers",
+      "stock": "1",
+      "size": "12 oz"
+    },
+    {
+      "id": "mexican-shredded-cheese",
+      "item": "Mexican shredded cheese",
+      "store": "Costco",
+      "aisle": "Refrigerated (Milk / Eggs)",
+      "aisleOrder": 13,
+      "unit": "bags",
+      "stock": "1",
+      "size": "2.5 lb"
+    },
+    {
+      "id": "monterey-jack-cheese-block",
+      "item": "Monterey jack cheese block",
+      "store": "WinCo",
+      "aisle": "Cheese",
+      "aisleOrder": 4,
+      "unit": "blocks",
+      "stock": "2",
+      "size": "1 lb"
+    },
+    {
+      "id": "mozzarella-fresh-w-herbs",
+      "item": "Mozzarella fresh w herbs",
+      "store": "Costco",
+      "aisle": "Refrigerated (Quick Meals / Sausage)",
+      "aisleOrder": 8,
+      "unit": "containers",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "rotisserie-chicken",
+      "item": "Rotisserie chicken",
+      "store": "Costco",
+      "aisle": "Refrigerated (Quick Meals / Sausage)",
+      "aisleOrder": 8,
+      "unit": "-",
+      "stock": "1",
+      "size": "1 ct"
+    },
+    {
+      "id": "chicken-tenders",
+      "item": "Chicken tenders",
+      "store": "Costco",
+      "aisle": "Freezer",
+      "aisleOrder": 12,
+      "unit": "bags",
+      "stock": "2",
+      "size": "48 oz"
+    },
+    {
+      "id": "boneless-skinless-chicken-thighs",
+      "item": "Boneless skinless chicken thighs",
+      "store": "Costco",
+      "aisle": "Meat",
+      "aisleOrder": 7,
+      "unit": "packages",
+      "stock": "16",
+      "size": "1 lb"
+    },
+    {
+      "id": "chicken-thighs-with-skin-and-bone",
+      "item": "Chicken thighs with skin and bone",
+      "store": "Costco",
+      "aisle": "Meat",
+      "aisleOrder": 7,
+      "unit": "packages",
+      "stock": "16",
+      "size": "1 lb"
+    },
+    {
+      "id": "original-nalley-chili",
+      "item": "Original nalley chili",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "cans",
+      "stock": "24",
+      "size": "15 oz"
+    },
+    {
+      "id": "baking-chocolate-powder",
+      "item": "Baking chocolate powder",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "containers",
+      "stock": "1",
+      "size": "8 oz"
+    },
+    {
+      "id": "baking-chocolate",
+      "item": "Baking chocolate",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "4 oz"
+    },
+    {
+      "id": "cocoa-mix",
+      "item": "Cocoa mix",
+      "store": "WinCo",
+      "aisle": "Cereal / Coffee / Peanut Butter / Bars",
+      "aisleOrder": 11,
+      "unit": "containers",
+      "stock": "3",
+      "size": "20 oz"
+    },
+    {
+      "id": "coconut-milk",
+      "item": "Coconut milk",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "cans",
+      "stock": "0",
+      "size": "13.5 oz"
+    },
+    {
+      "id": "ground-decaf-coffee",
+      "item": "Ground decaf coffee",
+      "store": "WinCo",
+      "aisle": "Cereal / Coffee / Peanut Butter / Bars",
+      "aisleOrder": 11,
+      "unit": "bags",
+      "stock": "2",
+      "size": "16 oz"
+    },
+    {
+      "id": "ground-regular-coffee",
+      "item": "Ground regular coffee",
+      "store": "WinCo",
+      "aisle": "Cereal / Coffee / Peanut Butter / Bars",
+      "aisleOrder": 11,
+      "unit": "bags",
+      "stock": "2",
+      "size": "16 oz"
+    },
+    {
+      "id": "starbucks-via-instant-coffee",
+      "item": "Starbucks Via instant coffee",
+      "store": "Costco",
+      "aisle": "Drinks",
+      "aisleOrder": 14,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "conditioner",
+      "item": "Conditioner",
+      "store": "WinCo",
+      "aisle": "Health",
+      "aisleOrder": 10,
+      "unit": "bottles",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "corn-dogs",
+      "item": "Corn Dogs",
+      "store": "WinCo",
+      "aisle": "Frozen",
+      "aisleOrder": 7,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "42.72 oz"
+    },
+    {
+      "id": "corn-starch",
+      "item": "Corn starch",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "containers",
+      "stock": "1",
+      "size": "1 lb"
+    },
+    {
+      "id": "canned-corn",
+      "item": "Canned corn",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "cans",
+      "stock": "20",
+      "size": "15.25 oz"
+    },
+    {
+      "id": "cornmeal",
+      "item": "Cornmeal",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "pounds",
+      "stock": "1",
+      "size": "1 lb"
+    },
+    {
+      "id": "cough-drops",
+      "item": "Cough drops",
+      "store": "WinCo",
+      "aisle": "Health",
+      "aisleOrder": 10,
+      "unit": "bags",
+      "stock": "2",
+      "size": "50 ct"
+    },
+    {
+      "id": "cheez-its",
+      "item": "Cheez-Its",
+      "store": "WinCo",
+      "aisle": "Crackers / Baby",
+      "aisleOrder": 9,
+      "unit": "boxes",
+      "stock": "0",
+      "size": "21 oz"
+    },
+    {
+      "id": "graham-crackers",
+      "item": "Graham crackers",
+      "store": "WinCo",
+      "aisle": "Crackers / Baby",
+      "aisleOrder": 9,
+      "unit": "boxes",
+      "stock": "0",
+      "size": "14.4 oz"
+    },
+    {
+      "id": "ritz-crackers",
+      "item": "Ritz crackers",
+      "store": "Costco",
+      "aisle": "Main Food Aisles",
+      "aisleOrder": 19,
+      "unit": "boxes",
+      "stock": "4",
+      "size": "20.5 oz"
+    },
+    {
+      "id": "saltines",
+      "item": "Saltines",
+      "store": "WinCo",
+      "aisle": "Crackers / Baby",
+      "aisleOrder": 9,
+      "unit": "boxes",
+      "stock": "6",
+      "size": "16 oz"
+    },
+    {
+      "id": "triscuits",
+      "item": "Triscuits",
+      "store": "WinCo",
+      "aisle": "Crackers / Baby",
+      "aisleOrder": 9,
+      "unit": "boxes",
+      "stock": "0",
+      "size": "8.5 oz"
+    },
+    {
+      "id": "wheat-thins",
+      "item": "Wheat thins",
+      "store": "WinCo",
+      "aisle": "Crackers / Baby",
+      "aisleOrder": 9,
+      "unit": "boxes",
+      "stock": "0",
+      "size": "16 oz"
+    },
+    {
+      "id": "cream-cheese-block",
+      "item": "Cream cheese block",
+      "store": "WinCo",
+      "aisle": "Dairy",
+      "aisleOrder": 6,
+      "unit": "boxes",
+      "stock": "6",
+      "size": "8 oz"
+    },
+    {
+      "id": "whipped-cream-cheese",
+      "item": "Whipped cream cheese",
+      "store": "WinCo",
+      "aisle": "Dairy",
+      "aisleOrder": 6,
+      "unit": "containers",
+      "stock": "6",
+      "size": "?"
+    },
+    {
+      "id": "cream-of-chicken-canned",
+      "item": "Cream of chicken canned",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "cans",
+      "stock": "0",
+      "size": "10.5 oz"
+    },
+    {
+      "id": "cream-of-mushroom-canned",
+      "item": "Cream of mushroom canned",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "cans",
+      "stock": "0",
+      "size": "10.5 oz"
+    },
+    {
+      "id": "croutons",
+      "item": "Croutons",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "bags",
+      "stock": "4",
+      "size": "5 oz"
+    },
+    {
+      "id": "cucumber",
+      "item": "Cucumber",
+      "store": "WinCo",
+      "aisle": "Veggies",
+      "aisleOrder": 2,
+      "unit": "-",
+      "stock": "6",
+      "size": "1 ea"
+    },
+    {
+      "id": "curry-golden-japanese",
+      "item": "Japanese golden curry",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "7.8 oz"
+    },
+    {
+      "id": "generic-dayquil",
+      "item": "Generic dayquil",
+      "store": "WinCo",
+      "aisle": "Health",
+      "aisleOrder": 10,
+      "unit": "bottles",
+      "stock": "3",
+      "size": "?"
+    },
+    {
+      "id": "dishwasher-pods",
+      "item": "Dishwasher pods",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "containers",
+      "stock": "3",
+      "size": "115 ea"
+    },
+    {
+      "id": "liquid-dish-soap",
+      "item": "Liquid dish soap",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "jugs",
+      "stock": "2",
+      "size": "135 oz"
+    },
+    {
+      "id": "raisins",
+      "item": "Raisins",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "containers",
+      "stock": "1",
+      "size": "1 lb"
+    },
+    {
+      "id": "eggos",
+      "item": "Eggos",
+      "store": "Costco",
+      "aisle": "Freezer",
+      "aisleOrder": 12,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "72 ct"
+    },
+    {
+      "id": "eggs",
+      "item": "Eggs",
+      "store": "WinCo",
+      "aisle": "Dairy",
+      "aisleOrder": 6,
+      "unit": "cartons",
+      "stock": "0",
+      "size": "?"
+    },
+    {
+      "id": "emergen-c",
+      "item": "Emergen-C",
+      "store": "WinCo",
+      "aisle": "Health",
+      "aisleOrder": 10,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "30 ct"
+    },
+    {
+      "id": "green-enchilada-sauce",
+      "item": "Green enchilada sauce",
+      "store": "WinCo",
+      "aisle": "Chips / Mexican / Popcorn",
+      "aisleOrder": 21,
+      "unit": "cans",
+      "stock": "0",
+      "size": "28 oz"
+    },
+    {
+      "id": "red-enchilada-sauce",
+      "item": "Rosarita red enchilada sauce",
+      "store": "Other",
+      "aisle": "General",
+      "aisleOrder": 1,
+      "unit": "cans",
+      "stock": "0",
+      "size": "?"
+    },
+    {
+      "id": "flossers",
+      "item": "Flossers",
+      "store": "WinCo",
+      "aisle": "Health",
+      "aisleOrder": 10,
+      "unit": "bags",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "all-purpose-flour",
+      "item": "All purpose flour",
+      "store": "Costco",
+      "aisle": "Oil / Spices / Baking",
+      "aisleOrder": 18,
+      "unit": "bags",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "whole-wheat-flour",
+      "item": "Whole wheat flour",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "bags",
+      "stock": "0",
+      "size": "?"
+    },
+    {
+      "id": "chocolate-frosting",
+      "item": "Chocolate frosting",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "containers",
+      "stock": "3",
+      "size": "15.6 oz"
+    },
+    {
+      "id": "vanilla-frosting",
+      "item": "Vanilla frosting",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "containers",
+      "stock": "3",
+      "size": "15.6 oz"
+    },
+    {
+      "id": "fruit-cocktail",
+      "item": "Fruit cocktail",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "cans",
+      "stock": "12",
+      "size": "15 oz"
+    },
+    {
+      "id": "contractor-garbage-bags",
+      "item": "Contractor garbage bags",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "32 ct"
+    },
+    {
+      "id": "kitchen-garbage-bags",
+      "item": "Kitchen garbage bags",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "200 ct"
+    },
+    {
+      "id": "yard-garbage-bags",
+      "item": "Yard garbage bags",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "90 ct"
+    },
+    {
+      "id": "garbanzo-beans",
+      "item": "Garbanzo beans",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "cans",
+      "stock": "0",
+      "size": "15.5 oz"
+    },
+    {
+      "id": "minced-garlic",
+      "item": "Minced garlic",
+      "store": "Costco",
+      "aisle": "Oil / Spices / Baking",
+      "aisleOrder": 18,
+      "unit": "containers",
+      "stock": "0",
+      "size": "48 oz"
+    },
+    {
+      "id": "gatorade-flat",
+      "item": "Gatorade (flat)",
+      "store": "Costco",
+      "aisle": "Drinks",
+      "aisleOrder": 14,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "gatorade-individual-jugs",
+      "item": "Gatorade (individual jugs)",
+      "store": "WinCo",
+      "aisle": "Drinks",
+      "aisleOrder": 20,
+      "unit": "bottles",
+      "stock": "12",
+      "size": "32 oz"
+    },
+    {
+      "id": "gaucamole",
+      "item": "Gaucamole",
+      "store": "Costco",
+      "aisle": "Refrigerated (Quick Meals / Sausage)",
+      "aisleOrder": 8,
+      "unit": "containers",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "ginger-root",
+      "item": "Ginger root",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "-",
+      "stock": "1",
+      "size": "1 lb"
+    },
+    {
+      "id": "automotive-gloves-large",
+      "item": "Automotive gloves large",
+      "store": "Costco",
+      "aisle": "Entry Side Aisles",
+      "aisleOrder": 4,
+      "unit": "boxes",
+      "stock": "4",
+      "size": "150 ct"
+    },
+    {
+      "id": "latex-gloves-large",
+      "item": "Latex gloves large",
+      "store": "Costco",
+      "aisle": "Health",
+      "aisleOrder": 20,
+      "unit": "boxes",
+      "stock": "4",
+      "size": "200 ct"
+    },
+    {
+      "id": "latex-gloves-small",
+      "item": "Latex gloves small",
+      "store": "Costco",
+      "aisle": "Health",
+      "aisleOrder": 20,
+      "unit": "boxes",
+      "stock": "4",
+      "size": "?"
+    },
+    {
+      "id": "granola",
+      "item": "Granola",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "pounds",
+      "stock": "1",
+      "size": "1 lb"
+    },
+    {
+      "id": "granola-bars",
+      "item": "Granola bars",
+      "store": "Costco",
+      "aisle": "Main Food Aisles",
+      "aisleOrder": 19,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "green-grapes",
+      "item": "Green grapes",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "containers",
+      "stock": "0",
+      "size": "?"
+    },
+    {
+      "id": "red-grapes",
+      "item": "Red grapes",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "containers",
+      "stock": "0",
+      "size": "?"
+    },
+    {
+      "id": "au-jus-gravy-dry",
+      "item": "Au jus gravy (dry packets)",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "packets",
+      "stock": "4",
+      "size": "?"
+    },
+    {
+      "id": "turkey-gravy-dry",
+      "item": "Turkey gravy (dry packets)",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "packets",
+      "stock": "4",
+      "size": "?"
+    },
+    {
+      "id": "green-beans-canned",
+      "item": "Canned Green Beans",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "cans",
+      "stock": "20",
+      "size": "14.5 oz"
+    },
+    {
+      "id": "mild-diced-green-chilis",
+      "item": "Mild diced green chilis",
+      "store": "WinCo",
+      "aisle": "Chips / Mexican / Popcorn",
+      "aisleOrder": 21,
+      "unit": "cans",
+      "stock": "8",
+      "size": "4 oz"
+    },
+    {
+      "id": "green-onions",
+      "item": "Green onions",
+      "store": "WinCo",
+      "aisle": "Veggies",
+      "aisleOrder": 2,
+      "unit": "-",
+      "stock": "1",
+      "size": "1 ea"
+    },
+    {
+      "id": "ground-beef-fresh",
+      "item": "Ground beef, fresh",
+      "store": "Costco",
+      "aisle": "Meat",
+      "aisleOrder": 7,
+      "unit": "packages",
+      "stock": "8",
+      "size": "?"
+    },
+    {
+      "id": "ground-beef-frozen",
+      "item": "Ground beef, frozen",
+      "store": "Costco",
+      "aisle": "Freezer",
+      "aisleOrder": 12,
+      "unit": "packages",
+      "stock": "8",
+      "size": "?"
+    },
+    {
+      "id": "gum",
+      "item": "Gum",
+      "store": "Costco",
+      "aisle": "Main Food Aisles",
+      "aisleOrder": 19,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "18 ct"
+    },
+    {
+      "id": "half-and-half",
+      "item": "Half and Half",
+      "store": "WinCo",
+      "aisle": "Dairy",
+      "aisleOrder": 6,
+      "unit": "pints",
+      "stock": "0",
+      "size": "16 oz"
+    },
+    {
+      "id": "hamburger-buns",
+      "item": "Hamburger buns",
+      "store": "WinCo",
+      "aisle": "Bread",
+      "aisleOrder": 22,
+      "unit": "bags",
+      "stock": "0",
+      "size": "?"
+    },
+    {
+      "id": "hand-sanitizer",
+      "item": "Hand sanitizer",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "containers",
+      "stock": "2",
+      "size": "67.6 oz"
+    },
+    {
+      "id": "orange-pumice-soap",
+      "item": "Orange pumice hand soap",
+      "store": "Other",
+      "aisle": "General",
+      "aisleOrder": 1,
+      "unit": "containers",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "hash-browns",
+      "item": "Hash browns",
+      "store": "WinCo",
+      "aisle": "Frozen",
+      "aisleOrder": 7,
+      "unit": "boxes",
+      "stock": "0",
+      "size": "?"
+    },
+    {
+      "id": "hoisin-sauce",
+      "item": "Hoisin sauce",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "jars",
+      "stock": "2",
+      "size": "20 oz"
+    },
+    {
+      "id": "honey",
+      "item": "Honey",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "containers",
+      "stock": "-",
+      "size": "?"
+    },
+    {
+      "id": "hot-dog-buns",
+      "item": "Hot dog buns",
+      "store": "WinCo",
+      "aisle": "Bread",
+      "aisleOrder": 22,
+      "unit": "bags",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "hot-dogs",
+      "item": "Hot dogs",
+      "store": "Costco",
+      "aisle": "Refrigerated (Milk / Eggs)",
+      "aisleOrder": 13,
+      "unit": "packages",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "cholula",
+      "item": "Cholula",
+      "store": "WinCo",
+      "aisle": "Chips / Mexican / Popcorn",
+      "aisleOrder": 21,
+      "unit": "bottles",
+      "stock": "5",
+      "size": "12 oz"
+    },
+    {
+      "id": "crystal-hot-sauce",
+      "item": "Crystal hot sauce",
+      "store": "WinCo",
+      "aisle": "Chips / Mexican / Popcorn",
+      "aisleOrder": 21,
+      "unit": "bottles",
+      "stock": "1",
+      "size": "12 oz"
+    },
+    {
+      "id": "franks-buffalo-sauce",
+      "item": "Frank's buffalo sauce",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "bottles",
+      "stock": "3",
+      "size": "12 oz"
+    },
+    {
+      "id": "sriracha",
+      "item": "Sriracha",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "bottles",
+      "stock": "1",
+      "size": "17 oz"
+    },
+    {
+      "id": "tajin-mild",
+      "item": "Tajin mild",
+      "store": "WinCo",
+      "aisle": "Chips / Mexican / Popcorn",
+      "aisleOrder": 21,
+      "unit": "bottles",
+      "stock": "2",
+      "size": "15.38 oz"
+    },
+    {
+      "id": "tamed-jalapenos",
+      "item": "Tamed jalapenos",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "jars",
+      "stock": "4",
+      "size": "16 oz"
+    },
+    {
+      "id": "raspberry-jam",
+      "item": "Raspberry jam",
+      "store": "WinCo",
+      "aisle": "Cereal / Coffee / Peanut Butter / Bars",
+      "aisleOrder": 11,
+      "unit": "jars",
+      "stock": "3",
+      "size": "46 oz"
+    },
+    {
+      "id": "strawberry-jam",
+      "item": "Strawberry jam",
+      "store": "WinCo",
+      "aisle": "Cereal / Coffee / Peanut Butter / Bars",
+      "aisleOrder": 11,
+      "unit": "jars",
+      "stock": "3",
+      "size": "46 oz"
+    },
+    {
+      "id": "jiffy-muffins-mix",
+      "item": "Jiffy muffins mix",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "boxes",
+      "stock": "6",
+      "size": "?"
+    },
+    {
+      "id": "kale",
+      "item": "Kale",
+      "store": "Costco",
+      "aisle": "Produce (walk-in cooler)",
+      "aisleOrder": 10,
+      "unit": "-",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "ketchup",
+      "item": "Ketchup",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "bottles",
+      "stock": "3",
+      "size": "64 oz"
+    },
+    {
+      "id": "kleenex",
+      "item": "Kleenex",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "boxes",
+      "stock": "?",
+      "size": "?"
+    },
+    {
+      "id": "lard",
+      "item": "Lard",
+      "store": "WinCo",
+      "aisle": "Chips / Mexican / Popcorn",
+      "aisleOrder": 21,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "laundry-detergent-pods",
+      "item": "Kirkland laundry detergent pods",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "containers",
+      "stock": "4",
+      "size": "152 ct"
+    },
+    {
+      "id": "lemons",
+      "item": "Lemons",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "-",
+      "stock": "2",
+      "size": "1 ea"
+    },
+    {
+      "id": "french-green-lentils",
+      "item": "French green lentils",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "pounds",
+      "stock": "1",
+      "size": "1 lb"
+    },
+    {
+      "id": "green-split-peas",
+      "item": "Green split peas",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "pounds",
+      "stock": "1",
+      "size": "1 lb"
+    },
+    {
+      "id": "red-lentils",
+      "item": "Red lentils",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "pounds",
+      "stock": "1",
+      "size": "1 lb"
+    },
+    {
+      "id": "yellow-split-peas",
+      "item": "Yellow split peas",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "pounds",
+      "stock": "1",
+      "size": "1 lb"
+    },
+    {
+      "id": "green-leaf-lettuce",
+      "item": "Green leaf lettuce",
+      "store": "WinCo",
+      "aisle": "Veggies",
+      "aisleOrder": 2,
+      "unit": "heads",
+      "stock": "1",
+      "size": "1 ea"
+    },
+    {
+      "id": "spring-mix-lettuce",
+      "item": "Spring mix lettuce",
+      "store": "Costco",
+      "aisle": "Produce (walk-in cooler)",
+      "aisleOrder": 10,
+      "unit": "containers",
+      "stock": "1",
+      "size": "1.5 lb"
+    },
+    {
+      "id": "lime",
+      "item": "Lime",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "-",
+      "stock": "2",
+      "size": "1 ea"
+    },
+    {
+      "id": "mac-and-cheese-bulk",
+      "item": "Mac and cheese, bulk",
+      "store": "Costco",
+      "aisle": "Main Food Aisles",
+      "aisleOrder": 19,
+      "unit": "boxes",
+      "stock": "24",
+      "size": "18 ct"
+    },
+    {
+      "id": "mac-and-cheese-by-the-box",
+      "item": "Mac and cheese, by the box",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "boxes",
+      "stock": "24",
+      "size": "1 ea"
+    },
+    {
+      "id": "mango",
+      "item": "Mango",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "-",
+      "stock": "1",
+      "size": "1 ea"
+    },
+    {
+      "id": "maple-syrup",
+      "item": "Maple syrup",
+      "store": "Costco",
+      "aisle": "Main Food Aisles",
+      "aisleOrder": 19,
+      "unit": "bottles",
+      "stock": "3",
+      "size": "33.8 oz"
+    },
+    {
+      "id": "mini-marshmallows",
+      "item": "Mini marshmallows",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "bags",
+      "stock": "2",
+      "size": "16 oz"
+    },
+    {
+      "id": "matches",
+      "item": "Matches",
+      "store": "WinCo",
+      "aisle": "Pets",
+      "aisleOrder": 16,
+      "unit": "boxes",
+      "stock": "6",
+      "size": "250 ct"
+    },
+    {
+      "id": "mayonaisse",
+      "item": "Mayonaisse",
+      "store": "Costco",
+      "aisle": "Main Food Aisles",
+      "aisleOrder": 19,
+      "unit": "jars",
+      "stock": "2",
+      "size": "64 oz"
+    },
+    {
+      "id": "meatballs",
+      "item": "Meatballs",
+      "store": "Costco",
+      "aisle": "Freezer",
+      "aisleOrder": 12,
+      "unit": "bags",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "cantaloupe",
+      "item": "Cantaloupe",
+      "store": "Costco",
+      "aisle": "Produce (room temp)",
+      "aisleOrder": 9,
+      "unit": "-",
+      "stock": "1",
+      "size": "1 ea"
+    },
+    {
+      "id": "honeydew-melon",
+      "item": "Honeydew melon",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "-",
+      "stock": "1",
+      "size": "1 ea"
+    },
+    {
+      "id": "watermelon",
+      "item": "Watermelon",
+      "store": "Costco",
+      "aisle": "Produce (room temp)",
+      "aisleOrder": 9,
+      "unit": "-",
+      "stock": "1",
+      "size": "1 ea"
+    },
+    {
+      "id": "1-percent-milk",
+      "item": "1% percent milk",
+      "store": "WinCo",
+      "aisle": "Dairy",
+      "aisleOrder": 6,
+      "unit": "gallons",
+      "stock": "1",
+      "size": "128 oz"
+    },
+    {
+      "id": "refrigerated-oat-milk",
+      "item": "Refrigerated oat milk",
+      "store": "WinCo",
+      "aisle": "Dairy",
+      "aisleOrder": 6,
+      "unit": "half gallons",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "shelf-stable-almond-milk",
+      "item": "Shelf stable almond milk",
+      "store": "Costco",
+      "aisle": "Drinks",
+      "aisleOrder": 14,
+      "unit": "cartons",
+      "stock": "6",
+      "size": "6 ea"
+    },
+    {
+      "id": "shelf-stable-oat-milk",
+      "item": "Shelf stable oat milk",
+      "store": "Costco",
+      "aisle": "Drinks",
+      "aisleOrder": 14,
+      "unit": "cartons",
+      "stock": "0",
+      "size": "32 oz"
+    },
+    {
+      "id": "whole-milk",
+      "item": "Whole milk",
+      "store": "WinCo",
+      "aisle": "Dairy",
+      "aisleOrder": 6,
+      "unit": "gallons",
+      "stock": "1",
+      "size": "128 oz"
+    },
+    {
+      "id": "mineral-water-other",
+      "item": "Mineral water, other",
+      "store": "Costco",
+      "aisle": "Drinks",
+      "aisleOrder": 14,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "lacroix",
+      "item": "LaCroix",
+      "store": "WinCo",
+      "aisle": "Drinks",
+      "aisleOrder": 20,
+      "unit": "boxes",
+      "stock": "6",
+      "size": "12 ct"
+    },
+    {
+      "id": "molasses",
+      "item": "Molasses",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "jars",
+      "stock": "0",
+      "size": "12 oz"
+    },
+    {
+      "id": "muffin-tin-liners",
+      "item": "Muffin tin liners",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "containers",
+      "stock": "4",
+      "size": "?"
+    },
+    {
+      "id": "dijon-mustard",
+      "item": "Dijon mustard",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "bottles",
+      "stock": "2",
+      "size": "12 oz"
+    },
+    {
+      "id": "yellow-mustard",
+      "item": "Yellow mustard",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "bottles",
+      "stock": "2",
+      "size": "20 oz"
+    },
+    {
+      "id": "napkins",
+      "item": "Napkins, Vanity Fair",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "sleeves",
+      "stock": "8",
+      "size": "110 ct"
+    },
+    {
+      "id": "noodle-bowls",
+      "item": "Noodle bowls",
+      "store": "Costco",
+      "aisle": "Main Food Aisles",
+      "aisleOrder": 19,
+      "unit": "bowls",
+      "stock": "12",
+      "size": "?"
+    },
+    {
+      "id": "sliced-almonds",
+      "item": "Sliced almonds",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "bags",
+      "stock": "1",
+      "size": "1 lb"
+    },
+    {
+      "id": "almonds",
+      "item": "Almonds",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "bags",
+      "stock": "1",
+      "size": "1 lb"
+    },
+    {
+      "id": "cashews",
+      "item": "Cashews",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "bags",
+      "stock": "1",
+      "size": "1 lb"
+    },
+    {
+      "id": "mixed-nuts",
+      "item": "Mixed nuts",
+      "store": "Costco",
+      "aisle": "Nuts / Seasonal",
+      "aisleOrder": 15,
+      "unit": "containers",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "pecans",
+      "item": "Pecans",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "bags",
+      "stock": "1",
+      "size": "1 lb"
+    },
+    {
+      "id": "walnuts",
+      "item": "Walnuts",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "bags",
+      "stock": "1",
+      "size": "1 lb"
+    },
+    {
+      "id": "low-sugar-instant-oatmeal",
+      "item": "Low sugar instant oatmeal",
+      "store": "WinCo",
+      "aisle": "Cereal / Coffee / Peanut Butter / Bars",
+      "aisleOrder": 11,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "10 ct"
+    },
+    {
+      "id": "old-fashioned-rolled-oats",
+      "item": "Old fashioned rolled oats",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "bags",
+      "stock": "1",
+      "size": "25 lb"
+    },
+    {
+      "id": "avocado-oil",
+      "item": "Avocado oil",
+      "store": "Costco",
+      "aisle": "Oil / Spices / Baking",
+      "aisleOrder": 18,
+      "unit": "bottles",
+      "stock": "2",
+      "size": "2 L"
+    },
+    {
+      "id": "canola-oil",
+      "item": "Canola oil",
+      "store": "Costco",
+      "aisle": "Oil / Spices / Baking",
+      "aisleOrder": 18,
+      "unit": "bottles",
+      "stock": "0",
+      "size": "1.25 gal"
+    },
+    {
+      "id": "coconut-oil",
+      "item": "Coconut oil",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "jars",
+      "stock": "2",
+      "size": "56 oz"
+    },
+    {
+      "id": "cooking-spray",
+      "item": "Cooking spray",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "cans",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "olive-oil",
+      "item": "Olive oil",
+      "store": "Costco",
+      "aisle": "Oil / Spices / Baking",
+      "aisleOrder": 18,
+      "unit": "bottles",
+      "stock": "2",
+      "size": "67.6 oz"
+    },
+    {
+      "id": "sesame-oil",
+      "item": "Sesame oil",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "bottles",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "sliced-olives",
+      "item": "Sliced olives",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "cans",
+      "stock": "8",
+      "size": "2.25 oz"
+    },
+    {
+      "id": "black-olives",
+      "item": "Black olives",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "cans",
+      "stock": "12",
+      "size": "6 oz"
+    },
+    {
+      "id": "green-olives",
+      "item": "Green olives",
+      "store": "Costco",
+      "aisle": "Main Food Aisles",
+      "aisleOrder": 19,
+      "unit": "jars",
+      "stock": "3",
+      "size": "21 oz"
+    },
+    {
+      "id": "kalamata-olives",
+      "item": "Kalamata olives",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "jars",
+      "stock": "4",
+      "size": "9.5 oz"
+    },
+    {
+      "id": "red-onions",
+      "item": "Red onions",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "-",
+      "stock": "6",
+      "size": "1 lb"
+    },
+    {
+      "id": "white-onions",
+      "item": "White onions",
+      "store": "Costco",
+      "aisle": "Produce (room temp)",
+      "aisleOrder": 9,
+      "unit": "-",
+      "stock": "6",
+      "size": "?"
+    },
+    {
+      "id": "yellow-onions",
+      "item": "Yellow onions",
+      "store": "Costco",
+      "aisle": "Produce (room temp)",
+      "aisleOrder": 9,
+      "unit": "-",
+      "stock": "6",
+      "size": "?"
+    },
+    {
+      "id": "orange-chicken",
+      "item": "Orange chicken",
+      "store": "Costco",
+      "aisle": "Freezer",
+      "aisleOrder": 12,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "66 oz"
+    },
+    {
+      "id": "mandarin-oranges",
+      "item": "Mandarin oranges",
+      "store": "Costco",
+      "aisle": "Produce (room temp)",
+      "aisleOrder": 9,
+      "unit": "-",
+      "stock": "0",
+      "size": "2 lb"
+    },
+    {
+      "id": "navel-oranges",
+      "item": "Navel oranges",
+      "store": "Costco",
+      "aisle": "Produce (room temp)",
+      "aisleOrder": 9,
+      "unit": "-",
+      "stock": "8",
+      "size": "8 lb"
+    },
+    {
+      "id": "aspirin",
+      "item": "Aspirin",
+      "store": "WinCo",
+      "aisle": "Health",
+      "aisleOrder": 10,
+      "unit": "bottles",
+      "stock": "1",
+      "size": "100 ct"
+    },
+    {
+      "id": "ibuprofen",
+      "item": "Ibuprofen",
+      "store": "Costco",
+      "aisle": "Health",
+      "aisleOrder": 20,
+      "unit": "bottles",
+      "stock": "2",
+      "size": "500 ct"
+    },
+    {
+      "id": "tylenol",
+      "item": "Tylenol",
+      "store": "Costco",
+      "aisle": "Health",
+      "aisleOrder": 20,
+      "unit": "bottles",
+      "stock": "2",
+      "size": "500 ct"
+    },
+    {
+      "id": "pancake-waffle-mix",
+      "item": "Pancake & Waffle mix",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "32 oz"
+    },
+    {
+      "id": "panty-liners",
+      "item": "Panty Liners (Barely There)",
+      "store": "WinCo",
+      "aisle": "Health",
+      "aisleOrder": 10,
+      "unit": "boxes",
+      "stock": "?",
+      "size": "50 ct"
+    },
+    {
+      "id": "cheap-paper-plates",
+      "item": "Cheap Paper Plates",
+      "store": "WinCo",
+      "aisle": "Supplies",
+      "aisleOrder": 8,
+      "unit": "bags",
+      "stock": "3",
+      "size": "?"
+    },
+    {
+      "id": "large-paper-plates",
+      "item": "Large Dixie paper plates",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "bags",
+      "stock": "2",
+      "size": "186 ct"
+    },
+    {
+      "id": "small-paper-plates",
+      "item": "Small paper plates",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "bags",
+      "stock": "2",
+      "size": "285 ct"
+    },
+    {
+      "id": "paper-towels",
+      "item": "Paper towels",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "things",
+      "stock": "12",
+      "size": "12 roll"
+    },
+    {
+      "id": "shop-towels",
+      "item": "Shop towels",
+      "store": "Costco",
+      "aisle": "Entry Side Aisles",
+      "aisleOrder": 4,
+      "unit": "things",
+      "stock": "2",
+      "size": "10 ea"
+    },
+    {
+      "id": "parchment-paper",
+      "item": "Parchment paper",
+      "store": "WinCo",
+      "aisle": "Supplies",
+      "aisleOrder": 8,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "45 sq ft"
+    },
+    {
+      "id": "grated-parmesean",
+      "item": "Grated parmesean",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "bottles",
+      "stock": "3",
+      "size": "8 oz"
+    },
+    {
+      "id": "pasta-sauce",
+      "item": "Pasta sauce",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "cans",
+      "stock": "24",
+      "size": "24 oz"
+    },
+    {
+      "id": "linguini",
+      "item": "Linguini",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "16 oz"
+    },
+    {
+      "id": "spaghetti",
+      "item": "Spaghetti (No. 5)",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "boxes",
+      "stock": "8",
+      "size": "16 oz"
+    },
+    {
+      "id": "whole-wheat-pasta-noodles",
+      "item": "Whole wheat pasta noodles",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "frozen-peaches",
+      "item": "Frozen peaches",
+      "store": "WinCo",
+      "aisle": "Frozen",
+      "aisleOrder": 7,
+      "unit": "bags",
+      "stock": "3",
+      "size": "?"
+    },
+    {
+      "id": "jarred-peaches",
+      "item": "Peaches in a jar",
+      "store": "Costco",
+      "aisle": "Main Food Aisles",
+      "aisleOrder": 19,
+      "unit": "jars",
+      "stock": "8",
+      "size": "24 oz"
+    },
+    {
+      "id": "peanut-butter",
+      "item": "Peanut butter",
+      "store": "WinCo",
+      "aisle": "Cereal / Coffee / Peanut Butter / Bars",
+      "aisleOrder": 11,
+      "unit": "jars",
+      "stock": "3",
+      "size": "36 oz"
+    },
+    {
+      "id": "peanut-sauce",
+      "item": "Peanut sauce",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "bottles",
+      "stock": "1",
+      "size": "9.2 oz"
+    },
+    {
+      "id": "pear-halves",
+      "item": "Pear halves",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "cans",
+      "stock": "12",
+      "size": "15 oz"
+    },
+    {
+      "id": "pears",
+      "item": "Pears",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "-",
+      "stock": "8",
+      "size": "1 lb"
+    },
+    {
+      "id": "canned-peas",
+      "item": "Canned peas",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "cans",
+      "stock": "0",
+      "size": "15 oz"
+    },
+    {
+      "id": "snap-peas",
+      "item": "Snap peas",
+      "store": "WinCo",
+      "aisle": "Veggies",
+      "aisleOrder": 2,
+      "unit": "bags",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "peperoncini",
+      "item": "Peperoncini",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "jars",
+      "stock": "4",
+      "size": "16 oz"
+    },
+    {
+      "id": "black-peppercorns",
+      "item": "Black peppercorns",
+      "store": "Costco",
+      "aisle": "Oil / Spices / Baking",
+      "aisleOrder": 18,
+      "unit": "containers",
+      "stock": "2",
+      "size": "14.1 oz"
+    },
+    {
+      "id": "basil-pesto",
+      "item": "Basil pesto",
+      "store": "Costco",
+      "aisle": "Refrigerated (Quick Meals / Sausage)",
+      "aisleOrder": 8,
+      "unit": "containers",
+      "stock": "0",
+      "size": "22 oz"
+    },
+    {
+      "id": "sandwich-dill-pickles",
+      "item": "Sandwich dill pickles",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "jars",
+      "stock": "3",
+      "size": "24 oz"
+    },
+    {
+      "id": "pie-shells",
+      "item": "Pie shells",
+      "store": "WinCo",
+      "aisle": "Frozen",
+      "aisleOrder": 7,
+      "unit": "-",
+      "stock": "4",
+      "size": "?"
+    },
+    {
+      "id": "pineapple",
+      "item": "Pineapple",
+      "store": "Costco",
+      "aisle": "Produce (room temp)",
+      "aisleOrder": 9,
+      "unit": "-",
+      "stock": "1",
+      "size": "1 ea"
+    },
+    {
+      "id": "pineapple-tidbits",
+      "item": "Pineapple tidbits",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "cans",
+      "stock": "14",
+      "size": "20 oz"
+    },
+    {
+      "id": "take-and-bake-pizza",
+      "item": "Take and bake pizza",
+      "store": "WinCo",
+      "aisle": "Cheese",
+      "aisleOrder": 4,
+      "unit": "-",
+      "stock": "0",
+      "size": "1 ea"
+    },
+    {
+      "id": "plastic-food-wrap",
+      "item": "Plastic food wrap",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "popcorn-kernels",
+      "item": "Popcorn kernels",
+      "store": "WinCo",
+      "aisle": "Chips / Mexican / Popcorn",
+      "aisleOrder": 21,
+      "unit": "bags",
+      "stock": "4",
+      "size": "1 lb"
+    },
+    {
+      "id": "pork-and-beans",
+      "item": "Pork and Beans",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "cans",
+      "stock": "0",
+      "size": "15 oz"
+    },
+    {
+      "id": "baby-potatoes",
+      "item": "Baby potatoes",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "bags",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "baking-potatoes",
+      "item": "Baking potatoes",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "-",
+      "stock": "1",
+      "size": "5 lb"
+    },
+    {
+      "id": "instant-mashed-potatoes",
+      "item": "Instant mashed potatoes",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "13.75 oz"
+    },
+    {
+      "id": "yellow-or-gold-potatoes",
+      "item": "Yellow or gold potatoes",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "bags",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "pretzels",
+      "item": "Pretzels",
+      "store": "WinCo",
+      "aisle": "Chips / Mexican / Popcorn",
+      "aisleOrder": 21,
+      "unit": "bags",
+      "stock": "3",
+      "size": "1 lb"
+    },
+    {
+      "id": "printer-paper",
+      "item": "Printer paper",
+      "store": "Costco",
+      "aisle": "Entry Side Aisles",
+      "aisleOrder": 4,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "10 ream"
+    },
+    {
+      "id": "q-tips",
+      "item": "Q-Tips",
+      "store": "WinCo",
+      "aisle": "Health",
+      "aisleOrder": 10,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "chicken-ramen",
+      "item": "Chicken ramen",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "24 ct"
+    },
+    {
+      "id": "ramen",
+      "item": "Ramen",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "24 ct"
+    },
+    {
+      "id": "ranch-dip-mix",
+      "item": "Ranch dip mix",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "packets",
+      "stock": "3",
+      "size": "?"
+    },
+    {
+      "id": "refrigerated-ranch-jar",
+      "item": "Litehouse Homestyle Ranch (dressing & dip)",
+      "store": "WinCo",
+      "aisle": "Veggies",
+      "aisleOrder": 2,
+      "unit": "jars",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "dill-relish",
+      "item": "Dill relish",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "jars",
+      "stock": "4",
+      "size": "10 oz"
+    },
+    {
+      "id": "basmati-rice",
+      "item": "Basmati rice",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "bags",
+      "stock": "1",
+      "size": "1 lb"
+    },
+    {
+      "id": "brown-rice",
+      "item": "Brown rice",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "bags",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "jasmine-rice",
+      "item": "Jasmine rice",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "bags",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "balsamic-dressing",
+      "item": "Balsamic dressing",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "bottles",
+      "stock": "2",
+      "size": "24 oz"
+    },
+    {
+      "id": "shelf-stable-ranch-dressing",
+      "item": "Shelf stable ranch dressing",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "bottles",
+      "stock": "2",
+      "size": "24 oz"
+    },
+    {
+      "id": "shelf-stable-italian-dressing",
+      "item": "Shelf stable italian dressing",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "bottles",
+      "stock": "2",
+      "size": "24 oz"
+    },
+    {
+      "id": "salad-dressing",
+      "item": "Salad dressing",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "bottles",
+      "stock": "2",
+      "size": "24 oz"
+    },
+    {
+      "id": "salad-kit",
+      "item": "Salad Kits",
+      "store": "Costco",
+      "aisle": "Produce (walk-in cooler)",
+      "aisleOrder": 10,
+      "unit": "bags",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "salami",
+      "item": "Salami",
+      "store": "WinCo",
+      "aisle": "Meat",
+      "aisleOrder": 5,
+      "unit": "bags",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "frozen-salmon",
+      "item": "Frozen salmon",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "packages",
+      "stock": "6",
+      "size": "?"
+    },
+    {
+      "id": "green-roasted-salsa",
+      "item": "Herdez roasted salsa verde",
+      "store": "WinCo",
+      "aisle": "Chips / Mexican / Popcorn",
+      "aisleOrder": 21,
+      "unit": "jars",
+      "stock": "4",
+      "size": "16 oz"
+    },
+    {
+      "id": "red-salsa",
+      "item": "Red salsa",
+      "store": "WinCo",
+      "aisle": "Chips / Mexican / Popcorn",
+      "aisleOrder": 21,
+      "unit": "jars",
+      "stock": "4",
+      "size": "24 oz"
+    },
+    {
+      "id": "iodized-salt",
+      "item": "Iodized salt",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "containers",
+      "stock": "2",
+      "size": "26 oz"
+    },
+    {
+      "id": "himalayan-or-pink-salt",
+      "item": "Himalayan or pink salt",
+      "store": "Costco",
+      "aisle": "Oil / Spices / Baking",
+      "aisleOrder": 18,
+      "unit": "containers",
+      "stock": "2",
+      "size": "5 lb"
+    },
+    {
+      "id": "salt-sea",
+      "item": "Salt sea",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "bags",
+      "stock": "1",
+      "size": "1 lb"
+    },
+    {
+      "id": "sardines",
+      "item": "Sardines",
+      "store": "Costco",
+      "aisle": "Main Food Aisles",
+      "aisleOrder": 19,
+      "unit": "cans",
+      "stock": "12",
+      "size": "6 ct"
+    },
+    {
+      "id": "chicken-apple-sausage",
+      "item": "Chicken apple sausage",
+      "store": "Costco",
+      "aisle": "Refrigerated (Quick Meals / Sausage)",
+      "aisleOrder": 8,
+      "unit": "packages",
+      "stock": "3",
+      "size": "3 lb"
+    },
+    {
+      "id": "ground-breakfast-sausage",
+      "item": "Ground breakfast sausage",
+      "store": "WinCo",
+      "aisle": "Meat",
+      "aisleOrder": 5,
+      "unit": "sleeves",
+      "stock": "2",
+      "size": "1 lb"
+    },
+    {
+      "id": "ground-mild-italian-sausage",
+      "item": "Ground mild italian sausage",
+      "store": "WinCo",
+      "aisle": "Meat",
+      "aisleOrder": 5,
+      "unit": "sleeves",
+      "stock": "2",
+      "size": "1 lb"
+    },
+    {
+      "id": "seaweed-snacks",
+      "item": "Seaweed snacks",
+      "store": "Costco",
+      "aisle": "Main Food Aisles",
+      "aisleOrder": 19,
+      "unit": "packages",
+      "stock": "10",
+      "size": "10 ct"
+    },
+    {
+      "id": "sunflower-seed-kernels",
+      "item": "Sunflower seed kernels",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "bags",
+      "stock": "1",
+      "size": "1 lb"
+    },
+    {
+      "id": "shampoo",
+      "item": "Shampoo",
+      "store": "WinCo",
+      "aisle": "Health",
+      "aisleOrder": 10,
+      "unit": "bottles",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "crisco-shortening",
+      "item": "Crisco shortening",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "containers",
+      "stock": "2",
+      "size": "16 oz"
+    },
+    {
+      "id": "shrimp",
+      "item": "Shrimp",
+      "store": "Costco",
+      "aisle": "Freezer",
+      "aisleOrder": 12,
+      "unit": "bags",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "sloppy-joe-mix",
+      "item": "Sloppy Joe mix",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "cans",
+      "stock": "0",
+      "size": "15 oz"
+    },
+    {
+      "id": "slug-slime",
+      "item": "Slug slime",
+      "store": "Other",
+      "aisle": "General",
+      "aisleOrder": 1,
+      "unit": "jars",
+      "stock": "3",
+      "size": "7.5 oz"
+    },
+    {
+      "id": "chicken-noodle-soup",
+      "item": "Chicken noodle soup",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "cans",
+      "stock": "20",
+      "size": "10.75 oz"
+    },
+    {
+      "id": "soup",
+      "item": "Soup",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "cans",
+      "stock": "9",
+      "size": "?"
+    },
+    {
+      "id": "big-sour-cream",
+      "item": "Big sour cream",
+      "store": "Costco",
+      "aisle": "Refrigerated (Milk / Eggs)",
+      "aisleOrder": 13,
+      "unit": "containers",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "regular-sour-cream",
+      "item": "Regular sour cream",
+      "store": "WinCo",
+      "aisle": "Dairy",
+      "aisleOrder": 6,
+      "unit": "containers",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "soy-sauce",
+      "item": "Soy sauce",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "bottles",
+      "stock": "2",
+      "size": "20 oz"
+    },
+    {
+      "id": "chili-powder",
+      "item": "Chili powder",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "-",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "cinnamon",
+      "item": "Cinnamon",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "-",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "cream-of-tartar",
+      "item": "Cream of tartar",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "-",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "garlic-salt",
+      "item": "Garlic salt",
+      "store": "Costco",
+      "aisle": "Oil / Spices / Baking",
+      "aisleOrder": 18,
+      "unit": "containers",
+      "stock": "1",
+      "size": "33 oz"
+    },
+    {
+      "id": "taco-seasoning",
+      "item": "Taco seasoning",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "-",
+      "stock": "1",
+      "size": "24 oz"
+    },
+    {
+      "id": "spinach",
+      "item": "Spinach",
+      "store": "Costco",
+      "aisle": "Produce (walk-in cooler)",
+      "aisleOrder": 10,
+      "unit": "containers",
+      "stock": "0",
+      "size": "?"
+    },
+    {
+      "id": "steak-sauce",
+      "item": "Steak sauce",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "bottles",
+      "stock": "1",
+      "size": "10 oz"
+    },
+    {
+      "id": "stir-fry-veggies",
+      "item": "Stir fry veggies (Taylor Farms)",
+      "store": "WinCo",
+      "aisle": "Veggies",
+      "aisleOrder": 2,
+      "unit": "bags",
+      "stock": "1",
+      "size": "1 ea"
+    },
+    {
+      "id": "strawberries",
+      "item": "Strawberries",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "containers",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "light-brown-sugar",
+      "item": "Light brown sugar",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "bags",
+      "stock": "2",
+      "size": "1 lb"
+    },
+    {
+      "id": "powdered-sugar",
+      "item": "Powdered sugar",
+      "store": "WinCo",
+      "aisle": "Baking",
+      "aisleOrder": 17,
+      "unit": "bags",
+      "stock": "2",
+      "size": "1 lb"
+    },
+    {
+      "id": "turbinado-sugar",
+      "item": "Turbinado sugar",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "bags",
+      "stock": "2",
+      "size": "1 lb"
+    },
+    {
+      "id": "white-sugar",
+      "item": "White sugar",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "bags",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "monkfruit-sweetener",
+      "item": "Monkfruit sweetener",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "bags",
+      "stock": "1",
+      "size": "1 lb"
+    },
+    {
+      "id": "tampons",
+      "item": "Tampons (regular)",
+      "store": "Costco",
+      "aisle": "Health",
+      "aisleOrder": 20,
+      "unit": "packages",
+      "stock": "?",
+      "size": "96 ct"
+    },
+    {
+      "id": "tater-tots",
+      "item": "Tater tots",
+      "store": "WinCo",
+      "aisle": "Frozen",
+      "aisleOrder": 7,
+      "unit": "bags",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "decaf-english-breakfast-tea",
+      "item": "Decaf English Breakfast tea",
+      "store": "WinCo",
+      "aisle": "Cereal / Coffee / Peanut Butter / Bars",
+      "aisleOrder": 11,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "regular-english-breakfast-tea",
+      "item": "Regular English Breakfast tea",
+      "store": "WinCo",
+      "aisle": "Cereal / Coffee / Peanut Butter / Bars",
+      "aisleOrder": 11,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "tea",
+      "item": "Tea",
+      "store": "Other",
+      "aisle": "General",
+      "aisleOrder": 1,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "sleepy-time-tea",
+      "item": "Sleepy time tea",
+      "store": "WinCo",
+      "aisle": "Cereal / Coffee / Peanut Butter / Bars",
+      "aisleOrder": 11,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "teriyaki-sauce",
+      "item": "Teriyaki sauce",
+      "store": "WinCo",
+      "aisle": "Soup / Asian / Beans / Noodles",
+      "aisleOrder": 18,
+      "unit": "bottles",
+      "stock": "2",
+      "size": "21 oz"
+    },
+    {
+      "id": "three-bean-salad",
+      "item": "Three bean salad",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "cans",
+      "stock": "0",
+      "size": "15 oz"
+    },
+    {
+      "id": "toilet-paper",
+      "item": "Toilet paper",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "-",
+      "stock": "2",
+      "size": "30 ea"
+    },
+    {
+      "id": "tomato-paste",
+      "item": "Tomato paste",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "cans",
+      "stock": "6",
+      "size": "6 oz"
+    },
+    {
+      "id": "tomato-sauce",
+      "item": "Tomato sauce",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "cans",
+      "stock": "8",
+      "size": "15 oz"
+    },
+    {
+      "id": "tomatoes",
+      "item": "Tomatoes",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "-",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "diced-tomatoes",
+      "item": "Diced tomatoes",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "cans",
+      "stock": "8",
+      "size": "14.5 oz"
+    },
+    {
+      "id": "sun-dried-tomatoes",
+      "item": "Sun-dried tomatoes",
+      "store": "Costco",
+      "aisle": "Main Food Aisles",
+      "aisleOrder": 19,
+      "unit": "jars",
+      "stock": "1",
+      "size": "35 oz"
+    },
+    {
+      "id": "toothpaste",
+      "item": "Toothpaste",
+      "store": "Costco",
+      "aisle": "Health",
+      "aisleOrder": 20,
+      "unit": "tubes",
+      "stock": "4",
+      "size": "?"
+    },
+    {
+      "id": "big-bag-of-tortilla-chips",
+      "item": "Big bag of tortilla chips",
+      "store": "Costco",
+      "aisle": "Main Food Aisles",
+      "aisleOrder": 19,
+      "unit": "bags",
+      "stock": "1",
+      "size": "24 oz"
+    },
+    {
+      "id": "doritos",
+      "item": "Doritos",
+      "store": "WinCo",
+      "aisle": "Chips / Mexican / Popcorn",
+      "aisleOrder": 21,
+      "unit": "bags",
+      "stock": "0",
+      "size": "15 oz"
+    },
+    {
+      "id": "hint-of-lime-chips",
+      "item": "Hint of lime chips",
+      "store": "WinCo",
+      "aisle": "Chips / Mexican / Popcorn",
+      "aisleOrder": 21,
+      "unit": "bags",
+      "stock": "0",
+      "size": "15 oz"
+    },
+    {
+      "id": "tortilla-chips",
+      "item": "Tortilla chips",
+      "store": "WinCo",
+      "aisle": "Chips / Mexican / Popcorn",
+      "aisleOrder": 21,
+      "unit": "bags",
+      "stock": "0",
+      "size": "24 oz"
+    },
+    {
+      "id": "tri-color-tortilla-strips",
+      "item": "Tri-color tortilla strips",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "-",
+      "stock": "1",
+      "size": "16 oz"
+    },
+    {
+      "id": "corn-tortillas",
+      "item": "Corn tortillas",
+      "store": "WinCo",
+      "aisle": "Chips / Mexican / Popcorn",
+      "aisleOrder": 21,
+      "unit": "bags",
+      "stock": "1",
+      "size": "10 ct"
+    },
+    {
+      "id": "flour-tortillas",
+      "item": "Flour tortillas",
+      "store": "Costco",
+      "aisle": "Main Food Aisles",
+      "aisleOrder": 19,
+      "unit": "bags",
+      "stock": "1",
+      "size": "?"
+    },
+    {
+      "id": "whole-wheat-tortillas",
+      "item": "Whole wheat tortillas",
+      "store": "WinCo",
+      "aisle": "Chips / Mexican / Popcorn",
+      "aisleOrder": 21,
+      "unit": "bags",
+      "stock": "2",
+      "size": "11 ct"
+    },
+    {
+      "id": "super-deluxe-trail-mix",
+      "item": "Super deluxe trail mix",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "-",
+      "stock": "2",
+      "size": "1 lb"
+    },
+    {
+      "id": "tums",
+      "item": "Tums",
+      "store": "WinCo",
+      "aisle": "Health",
+      "aisleOrder": 10,
+      "unit": "bottles",
+      "stock": "2",
+      "size": "160 ct"
+    },
+    {
+      "id": "tuna",
+      "item": "Tuna",
+      "store": "Costco",
+      "aisle": "Main Food Aisles",
+      "aisleOrder": 19,
+      "unit": "cans",
+      "stock": "24",
+      "size": "8 ct"
+    },
+    {
+      "id": "compostable-forks",
+      "item": "Compostable forks",
+      "store": "WinCo",
+      "aisle": "Supplies",
+      "aisleOrder": 8,
+      "unit": "boxes",
+      "stock": "4",
+      "size": "24 ct"
+    },
+    {
+      "id": "compostable-spoons",
+      "item": "Compostable spoons",
+      "store": "WinCo",
+      "aisle": "Supplies",
+      "aisleOrder": 8,
+      "unit": "boxes",
+      "stock": "4",
+      "size": "24 ct"
+    },
+    {
+      "id": "mixed-frozen-veggies",
+      "item": "Mixed frozen veggies",
+      "store": "WinCo",
+      "aisle": "Frozen",
+      "aisleOrder": 7,
+      "unit": "bags",
+      "stock": "3",
+      "size": "28 oz"
+    },
+    {
+      "id": "frozen-peas-and-carrots",
+      "item": "Frozen peas and carrots",
+      "store": "WinCo",
+      "aisle": "Frozen",
+      "aisleOrder": 7,
+      "unit": "bags",
+      "stock": "3",
+      "size": "?"
+    },
+    {
+      "id": "frozen-stir-fry-asian-veggies",
+      "item": "Frozen stir fry asian veggies",
+      "store": "WinCo",
+      "aisle": "Frozen",
+      "aisleOrder": 7,
+      "unit": "bags",
+      "stock": "3",
+      "size": "16 oz"
+    },
+    {
+      "id": "frozen-stir-fry-san-francisco-veggies",
+      "item": "Frozen stir fry san francisco veggies",
+      "store": "WinCo",
+      "aisle": "Frozen",
+      "aisleOrder": 7,
+      "unit": "bags",
+      "stock": "3",
+      "size": "16 oz"
+    },
+    {
+      "id": "apple-cider-vinegar",
+      "item": "Apple cider vinegar",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "bottles",
+      "stock": "1",
+      "size": "32 oz"
+    },
+    {
+      "id": "balsamic-vinegar",
+      "item": "Balsamic vinegar",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "bottles",
+      "stock": "1",
+      "size": "17 oz"
+    },
+    {
+      "id": "white-distilled-vinegar",
+      "item": "White distilled vinegar",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "bottles",
+      "stock": "2",
+      "size": "32 oz"
+    },
+    {
+      "id": "malt-vinegar",
+      "item": "Malt vinegar",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "bottles",
+      "stock": "1",
+      "size": "12 oz"
+    },
+    {
+      "id": "rice-vinegar",
+      "item": "Rice vinegar",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "bottles",
+      "stock": "1",
+      "size": "20 oz"
+    },
+    {
+      "id": "red-wine-vinegar",
+      "item": "Red wine vinegar",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "bottles",
+      "stock": "1",
+      "size": "25 oz"
+    },
+    {
+      "id": "white-wine-vinegar",
+      "item": "White wine vinegar",
+      "store": "WinCo",
+      "aisle": "Dressings / Olives / Canned",
+      "aisleOrder": 19,
+      "unit": "bottles",
+      "stock": "1",
+      "size": "12 oz"
+    },
+    {
+      "id": "distilled-water",
+      "item": "Distilled water",
+      "store": "WinCo",
+      "aisle": "Drinks",
+      "aisleOrder": 20,
+      "unit": "gallons",
+      "stock": "2",
+      "size": "128 oz"
+    },
+    {
+      "id": "wax-paper",
+      "item": "Wax paper",
+      "store": "WinCo",
+      "aisle": "Supplies",
+      "aisleOrder": 8,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "75 sq ft"
+    },
+    {
+      "id": "baby-diaper-wipes",
+      "item": "Baby diaper wipes",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "boxes",
+      "stock": "2",
+      "size": "900 ct"
+    },
+    {
+      "id": "clorox-disinfectant-wipes",
+      "item": "Clorox disinfectant wipes",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "containers",
+      "stock": "1",
+      "size": "85 ct"
+    },
+    {
+      "id": "kirkland-disinfectant-wipes",
+      "item": "Kirkland disinfectant wipes",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "containers",
+      "stock": "2",
+      "size": "304 ct"
+    },
+    {
+      "id": "sweet-potato-yam",
+      "item": "Sweet potato yams",
+      "store": "WinCo",
+      "aisle": "Fruit",
+      "aisleOrder": 1,
+      "unit": "-",
+      "stock": "4",
+      "size": "1 lb"
+    },
+    {
+      "id": "instant-yeast",
+      "item": "Instant yeast",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "packages",
+      "stock": "2",
+      "size": "16 oz"
+    },
+    {
+      "id": "nutritional-yeast",
+      "item": "Nutritional yeast",
+      "store": "WinCo",
+      "aisle": "Bulk",
+      "aisleOrder": 3,
+      "unit": "bags",
+      "stock": "2",
+      "size": "1 lb"
+    },
+    {
+      "id": "lemon-yogurt",
+      "item": "Lemon yogurt",
+      "store": "WinCo",
+      "aisle": "Dairy",
+      "aisleOrder": 6,
+      "unit": "containers",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "whole-milk-yogurt",
+      "item": "Whole milk yogurt",
+      "store": "WinCo",
+      "aisle": "Dairy",
+      "aisleOrder": 6,
+      "unit": "containers",
+      "stock": "2",
+      "size": "?"
+    },
+    {
+      "id": "gallon-freezer-ziploc-bags",
+      "item": "Gallon freezer ziploc bags",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "38 ct"
+    },
+    {
+      "id": "quart-freezer-ziploc-bags",
+      "item": "Quart freezer ziploc bags",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "54 ct"
+    },
+    {
+      "id": "ziploc-sandwich-bags",
+      "item": "Ziploc sandwich bags",
+      "store": "Costco",
+      "aisle": "Rear",
+      "aisleOrder": 11,
+      "unit": "boxes",
+      "stock": "1",
+      "size": "?"
+    }
+  ]
+}
