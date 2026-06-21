@@ -7,6 +7,7 @@
 <meta name="theme-color" content="#1a1a18">
 <title>Pantry Shopper</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
 </head>
@@ -150,6 +151,14 @@ OPENAI_API_KEY=sk-...</pre>
     <div class="modal-title">Unknown item</div>
     <div class="modal-subtitle" id="storeModalSubtitle"></div>
     <div class="modal-options" id="storeOptions"></div>
+    <div class="input-row" style="margin-top:4px;">
+      <select class="inp" id="unknownAisleSelect" onchange="onAisleSelectChange()">
+        <option value="">— Select aisle —</option>
+        <option value="__new__">+ New aisle…</option>
+      </select>
+      <input class="inp" id="unknownStock" placeholder="Keep on hand (optional)" style="max-width:160px;">
+    </div>
+    <input class="inp" id="unknownAisleNew" placeholder="New aisle name…" style="display:none;margin-top:8px;">
     <div class="modal-actions">
       <button class="btn btn-primary" onclick="confirmStore()">Add to List</button>
       <button class="btn btn-ghost" onclick="skipStore()">Skip</button>
@@ -500,38 +509,96 @@ function showStoreModal(unknown) {
   currentUnknown = unknown;
   document.getElementById('storeModalSubtitle').textContent =
     `"${unknown.spoken}" wasn't found in your catalog. Which store should it go under?`;
+  document.getElementById('unknownStock').value = '';
+  document.getElementById('unknownAisleNew').style.display = 'none';
+  document.getElementById('unknownAisleNew').value = '';
 
   const defaultIdx = catalog.stores.findIndex(s => s.name === settings.defaultStore);
+  const startIdx = defaultIdx >= 0 ? defaultIdx : 0;
   const opts = document.getElementById('storeOptions');
   opts.innerHTML = catalog.stores.map((s, i) => `
     <label class="modal-option">
-      <input type="radio" name="storeChoice" value="${i}" class="modal-check" ${i === (defaultIdx >= 0 ? defaultIdx : 0) ? 'checked' : ''}>
+      <input type="radio" name="storeChoice" value="${i}" class="modal-check" onchange="populateAisleSelect()" ${i === startIdx ? 'checked' : ''}>
       <div class="modal-option-info">
         <div class="modal-option-name">${esc(s.name)}</div>
       </div>
     </label>
   `).join('');
 
+  populateAisleSelect();
   document.getElementById('storeBackdrop').style.display = 'flex';
 }
 
-function confirmStore() {
+function aislesForStore(storeName) {
+  const set = new Set();
+  catalog.items.forEach(i => { if (i.store === storeName && i.aisle) set.add(i.aisle); });
+  return [...set].sort();
+}
+
+function populateAisleSelect() {
+  const checked = document.querySelector('#storeOptions input[type=radio]:checked');
+  const storeName = checked ? catalog.stores[parseInt(checked.value)].name : null;
+  const aisles = storeName ? aislesForStore(storeName) : [];
+  const sel = document.getElementById('unknownAisleSelect');
+  sel.innerHTML = '<option value="">— Select aisle —</option>' +
+    aisles.map(a => `<option value="${esc(a)}">${esc(a)}</option>`).join('') +
+    '<option value="__new__">+ New aisle…</option>';
+  document.getElementById('unknownAisleNew').style.display = 'none';
+  document.getElementById('unknownAisleNew').value = '';
+}
+
+function onAisleSelectChange() {
+  const sel = document.getElementById('unknownAisleSelect');
+  const newInput = document.getElementById('unknownAisleNew');
+  if (sel.value === '__new__') {
+    newInput.style.display = '';
+    newInput.focus();
+  } else {
+    newInput.style.display = 'none';
+    newInput.value = '';
+  }
+}
+
+async function confirmStore() {
   const checked = document.querySelector('#storeOptions input[type=radio]:checked');
   if (!checked) return;
   const store = catalog.stores[parseInt(checked.value)];
+
+  const aisleSel = document.getElementById('unknownAisleSelect').value;
+  const aisleNew = document.getElementById('unknownAisleNew').value.trim();
+  const aisle = aisleSel === '__new__' ? (aisleNew || 'Unknown') : (aisleSel || 'Unknown');
+
+  const stock = document.getElementById('unknownStock').value.trim();
+  const itemName = currentUnknown.item || currentUnknown.spoken;
+  const newId = slugify(itemName) + '-' + Date.now();
+
   resolvedItems.push({
-    id: slugify(currentUnknown.item || currentUnknown.spoken) + '-' + Date.now(),
-    item: currentUnknown.item || currentUnknown.spoken,
+    id: newId,
+    item: itemName,
     qty: currentUnknown.qty || 1,
     unit: currentUnknown.unit || '',
     store: store.name,
-    aisle: 'Unknown',
+    aisle: aisle,
     aisleOrder: 1,
     size: '',
-    stock: '',
+    stock: stock,
     checked: false,
     catalogMatch: false
   });
+
+  // Also add it to the catalog so it's remembered for next time
+  catalog.items.push({
+    id: newId,
+    item: itemName,
+    store: store.name,
+    aisle: aisle,
+    aisleOrder: 1,
+    unit: currentUnknown.unit || '',
+    stock: stock,
+    size: ''
+  });
+  await fetch('/api/catalog', { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(catalog) });
+
   document.getElementById('storeBackdrop').style.display = 'none';
   currentUnknown = null;
   processNextUnknown();
@@ -689,11 +756,19 @@ function renderCatalog() {
   document.getElementById('catalogBody').innerHTML = catalog.items.map((item, idx) => `
     <tr>
       <td><input value="${esc(item.item||item.name||'')}" onchange="updateCatalogItem(${idx},'item',this.value)"></td>
-      <td><select onchange="updateCatalogItem(${idx},'store',this.value)">
+      <td><select onchange="updateCatalogItem(${idx},'store',this.value);onCatalogStoreChange(${idx})">
         ${catalog.stores.map(s => `<option value="${esc(s.name)}" ${s.name===item.store?'selected':''}>${esc(s.name)}</option>`).join('')}
         <option value="Unknown" ${item.store==='Unknown'?'selected':''}>Unknown</option>
       </select></td>
-      <td><input value="${esc(item.aisle)}" onchange="updateCatalogItem(${idx},'aisle',this.value)"></td>
+      <td>
+        <select id="aisleSel-${idx}" onchange="onCatalogAisleSelectChange(${idx})">
+          ${catalogAisleOptions(item.store, item.aisle)}
+        </select>
+        <input id="aisleNew-${idx}" value="${esc(item.aisle && !aislesForStore(item.store).includes(item.aisle) ? item.aisle : '')}"
+          placeholder="New aisle name…"
+          style="display:${item.aisle && !aislesForStore(item.store).includes(item.aisle) ? '' : 'none'};margin-top:4px;width:100%;"
+          onchange="updateCatalogItem(${idx},'aisle',this.value)">
+      </td>
       <td><input type="number" value="${item.aisleOrder}" style="width:48px" onchange="updateCatalogItem(${idx},'aisleOrder',parseInt(this.value))"></td>
       <td><input value="${esc(item.unit||'')}" placeholder="cans…" onchange="updateCatalogItem(${idx},'unit',this.value)"></td>
       <td><input value="${esc(item.stock||'')}" placeholder="0" style="width:40px" onchange="updateCatalogItem(${idx},'stock',this.value)"></td>
@@ -701,6 +776,37 @@ function renderCatalog() {
       <td><button class="del-row-btn" onclick="deleteCatalogRow(${idx})">✕</button></td>
     </tr>`).join('');
   filterCatalog();
+}
+
+function catalogAisleOptions(storeName, currentAisle) {
+  const aisles = aislesForStore(storeName);
+  const isKnown = aisles.includes(currentAisle);
+  return '<option value="">— Select aisle —</option>' +
+    aisles.map(a => `<option value="${esc(a)}" ${a === currentAisle ? 'selected' : ''}>${esc(a)}</option>`).join('') +
+    `<option value="__new__" ${!isKnown && currentAisle ? 'selected' : ''}>+ New aisle…</option>`;
+}
+
+function onCatalogStoreChange(idx) {
+  const sel = document.getElementById(`aisleSel-${idx}`);
+  sel.innerHTML = catalogAisleOptions(catalog.items[idx].store, '');
+  document.getElementById(`aisleNew-${idx}`).style.display = 'none';
+  document.getElementById(`aisleNew-${idx}`).value = '';
+  updateCatalogItem(idx, 'aisle', '');
+}
+
+function onCatalogAisleSelectChange(idx) {
+  const sel = document.getElementById(`aisleSel-${idx}`);
+  const newInput = document.getElementById(`aisleNew-${idx}`);
+  if (sel.value === '__new__') {
+    newInput.style.display = '';
+    newInput.value = '';
+    newInput.focus();
+    updateCatalogItem(idx, 'aisle', '');
+  } else {
+    newInput.style.display = 'none';
+    newInput.value = '';
+    updateCatalogItem(idx, 'aisle', sel.value);
+  }
 }
 
 function filterCatalog() {
